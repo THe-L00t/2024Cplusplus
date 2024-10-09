@@ -34,6 +34,7 @@ int main()
 		}
 		catch (std::exception& e) {
 			std::cout << e.what() << std::endl;
+			break; // 예외처리 
 		}
 		char* c = new char[2'000'000'000];
 		std::cout << ++cnt << "-메모리 할당 성공" << std::endl;
