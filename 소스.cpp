@@ -14,7 +14,7 @@
 
 using namespace std::literals;
 
-char c[1'000'000'000];
+char c[1'000'000'000]{ 'A', 'B','C' };
 
 int main()
 {
