@@ -5,43 +5,21 @@
 //--------------------------------------------------------------------------------------
 // 10.31(목) - 9주 1일차 - 중간 시험예상
 //--------------------------------------------------------------------------------------
-// 동적할당 메모리
+// C++ 실행파일 메모리  - STACK, DATA, free store, CODE
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
-#include <chrono>
-#include <thread>
-#include <random>
-#include <print>
-#include <array>
-
 
 #include "save.h"
 
 using namespace std::literals;
 
+char c[1'000'000'000];
+
 int main()
 {
-	int cnt{};
-	//메모리를 계속 요청한다면?
-	while (true) {
-		//메모리 요청은 실패할 수 있다.
-		//실패 시 메모리 관리자는 예외를 던진다. 
-		//이 예외를 처리 하니 않으면 프로그램은 비정상 종료한다. 
-
-		try {
-			char* c = new char[2'000'000'000];
-		}
-		catch (std::exception& e) {
-			std::cout << e.what() << std::endl;
-			break; // 예외처리 
-		}
-		char* c = new char[2'000'000'000];
-		std::cout << ++cnt << "-메모리 할당 성공" << std::endl;
-		
-		std::this_thread::sleep_for(0.5s);
-		delete(c);
+	for (int i = 0; i < 10; ++i) {
+		std::cout << (char)(c[i] + 7) << std::endl;
 	}
-
 	save("소스.cpp");
 }
