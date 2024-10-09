@@ -28,6 +28,13 @@ int main()
 		//메모리 요청은 실패할 수 있다.
 		//실패 시 메모리 관리자는 예외를 던진다. 
 		//이 예외를 처리 하니 않으면 프로그램은 비정상 종료한다. 
+
+		try {
+			char* c = new char[2'000'000'000];
+		}
+		catch (std::exception& e) {
+			std::cout << e.what() << std::endl;
+		}
 		char* c = new char[2'000'000'000];
 		std::cout << ++cnt << "-메모리 할당 성공" << std::endl;
 		
