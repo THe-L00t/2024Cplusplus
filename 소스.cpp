@@ -12,19 +12,21 @@
 
 #include "save.h"
 
-using namespace std::literals;
-
-char c[1'000'000'000]{};//해당 메모리가 하드디스크에 기록된다. 기계어로 메모리를 깔 수 없다. 
-//그래서 오래 걸린다. 
-//초기값을 주지 않아야 알아서 0으로 초기화 되며 기계어로 메모리 관리가 가능하여 
-//빠름
-
-//BSS  초기화 영역이 다르다??
+int add(int, int);
 
 int main()
 {
-	for (int i = 0; i < 10; ++i) {
-		std::cout << (char)(c[i] + 7) << std::endl;
-	}
-	save("소스.cpp");
+
+	int num{ 123 };
+	int* pn = &num;
+
+	std::cout << "add의 자료형: " << typeid(add).name() << std::endl;
+
+	//[](int, int)* {} fp = add; //함수를 어떻게 save할 수 있나
+
+	(*save)("소스.cpp");//정석 함수 호출
+}
+
+int add(int a, int b) {
+	return a + b;
 }
