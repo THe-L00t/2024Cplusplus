@@ -15,6 +15,11 @@
 
 int main()
 {
+	//[문제] 여러분의 폴더에는 "int 100개"라는 파일이 있다. 
+	//이 파일에는 int 값 100개가 문자 형식으로 기록되어 있다. 
+	//int 값은 공백으로 분리되어 있다. 
+	//파일에 있느 int값을 읽어 화면에 출력하라. 
+
 	std::ofstream  out{ "int 100개" }; //RAII
 	std::ifstream in{"int 100개"};
 	int i = 0;
@@ -22,7 +27,7 @@ int main()
 		out << i << std::endl;
 	}
 	for (int j = 1; j <= 100; ++j) {
-		in >> i;
+		in >> i;//고급 입력, 스페이스바로 정수를 구분
 		std::cout << i << std::endl;
 	}
 
