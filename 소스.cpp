@@ -16,9 +16,14 @@
 int main()
 {
 	std::ofstream  out{ "int 100개" }; //RAII
-
+	std::ifstream in{"int 100개"};
+	int i = 0;
 	for (int i = 1; i <= 100; ++i) {
 		out << i << std::endl;
+	}
+	for (int j = 1; j <= 100; ++j) {
+		in >> i;
+		std::cout << i << std::endl;
 	}
 
 	(*save)("소스.cpp");//정석 함수 호출
