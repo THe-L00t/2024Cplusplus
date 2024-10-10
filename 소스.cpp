@@ -22,8 +22,8 @@ int main()
 
 	std::cout << "add의 자료형: " << typeid(add).name() << std::endl;
 
-	//[](int, int)* {} fp = add; //함수를 어떻게 save할 수 있나
-
+	int (*fp)(int, int) = add; //함수를 어떻게 save할 수 있나
+	std::cout<< fp(12,34)<<std::endl;
 	(*save)("소스.cpp");//정석 함수 호출
 }
 
