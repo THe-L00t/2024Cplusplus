@@ -13,11 +13,31 @@
 
 #include "save.h"
 
+int add(int, int);
+int sub(int, int);
+
+//함수의 이름은 무엇인가요?
+//함수는 실행 파일의 CODE segment에 기록되어 있다. 
+//기록된 메모리의 시작번지가 바로 함수의 이름이다. 
+
+//메모리를 가리키는 것 = 포인터
 int main()
 {
-	//int* p;				//raw pointer : 기능없음, 사용하지 말것 
+	int (*fp)(int, int) = add;
 
-	std::unique_ptr<int> p{ new int[10] }; //delete 순간이 자동화
-	//RAII
+	std::cout << (*fp)(123, 456) << std::endl;
+
+	fp = sub;
+
+	std::cout << (*fp)(123, 456) << std::endl;
+
 	(*save)("소스.cpp");//정석 함수 호출
+}
+
+int add(int a, int b) {
+	return a + b;
+}
+
+int sub(int a, int b) {
+	return a - b;
 }
