@@ -14,40 +14,26 @@
 
 #include "save.h"
 
-
 int main()
 {
-	//[문제] 파일 "랜덤값 몇개.mp3"에는 몇 개인지 모르는 int 값이
-	//저장되어 있다.
-	// 오름차순 정렬하려 화면 출력하라
+	//[문제] 파일 "메인.cpp"에 사용된 알파벳 소문자의 개수를 출력하라
+	//출력 예
+	// a - 10
+	// b - 2
 	// 
-	int count{ 0 };
-	{
-		std::ifstream in{ "랜덤값 몇개.mp3" };
-		if (not in) {		// 에러 확인 필수 
-			std::cout << "불러오기 실패" << std::endl;
-			return 333;
+
+	std::ifstream in{ "소스.cpp" };
+	if (!in) { return 404; }
+
+	char C;
+	int c[26]{};
+	while (in >> C) {
+		for (int i = 'a'; i <='z'; ++i) {
+			if (i == C) c[i - 'a'] += 1;
 		}
-
-		int max{ -1 }, num;
-		while (in >> num) {	//!in.eof() 사용하지 않기  : in >> num 사용하기 
-
-			++count;
-			max = (max < num) ? num : max;
-		}
-	std::cout << "int의 개수 : " << count << std::endl << "가장 큰 값 : " << max << std::endl;
 	}
-
-	std::ifstream in{ "랜덤값 몇개.mp3" };
-	int* arr = new int[count];
-	int num, i{ 0 };
-	while (in >> num) {
-		arr[i] = num;
-		++i;
-	}
-	qsort(arr, count, sizeof(int), [](const void* a, const void* b) {return *(int*)a - *(int*)b; });
-	for (int j = 0; j < count; ++j) {
-		std::print("{:16}", arr[j]);
+	for (int i = 0; i < 26; ++i) {
+		std::cout << (char)(i + 'a') << "의 개수는 " << c[i] << std::endl;
 	}
 
 	(*save)("소스.cpp");//정석 함수 호출
