@@ -27,9 +27,13 @@ int main()
 	std::ofstream out{ "메인대문자.cpp" };
 
 	char c;
+	in >> std::noskipws;
 	while (in >> c) {
-		if (islower(c)) out << static_cast<char>(c - ('a' - 'A'));
-		else out << c;
+		char ch = toupper(c);
+		out << ch;
+		//out << static_cast<char>(toupper(c));
+		/*if (islower(c)) out << static_cast<char>(c - ('a' - 'A'));
+		else out << c;*/
 	}
 
 	(*save)("소스.cpp");//정석 함수 호출
