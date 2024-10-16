@@ -13,24 +13,25 @@
 
 #include "save.h"
 
+
 int main()
 {
-	//[문제] 여러분의 폴더에는 "int 100개"라는 파일이 있다. 
-	//이 파일에는 int 값 100개가 문자 형식으로 기록되어 있다. 
-	//int 값은 공백으로 분리되어 있다. 
-	//파일에 있느 int값을 읽어 화면에 출력하라. 
+	//[문제] 파일 "랜덤값 몇개.mp3"에는 몇 개인지 모르는 int 값이
+	//저장되어 있다. 
+	// 모두 몇 개인지 출력하라
+	//가장 큰 값을 찾아 화면에 출력하라. 
 
-	std::ifstream in{"int 100개"};
-	if (not in) {
-		std::cout << "파일을 읽을 수 없습니다." << std::endl;
-		exit(111);
-	}
+	std::ifstream in{ "랜덤값 몇개.mp3" };
 
-	int num;
-	for (int i = 0; i < 100; ++i) {
+	int count{ 0 }, max{ -1 };
+	while (in) {
+		int num;
 		in >> num;
-		std::cout << num <<" - ";
+		++count;
+		max = (max < num) ? num : max;
 	}
+
+	std::cout << "int의 개수 : " << count << std::endl << "가장 큰 값 : " << max << std::endl;
 
 	(*save)("소스.cpp");//정석 함수 호출
 }
