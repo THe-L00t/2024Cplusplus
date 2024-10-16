@@ -20,7 +20,7 @@ int main()
 	//출력 예
 	// a - 10
 	// b - 2
-	// 
+	//
 
 	std::ifstream in{ "소스.cpp" };
 	if (!in) { return 404; }
@@ -28,13 +28,16 @@ int main()
 	char C;
 	int c[26]{};
 	while (in >> C) {
-		for (int i = 'a'; i <='z'; ++i) {
+		/*for (int i = 'a'; i <='z'; ++i) {
 			if (i == C) c[i - 'a'] += 1;
+		}*/
+		if (islower(C)) {
+			c[C - 'a']++;
 		}
 	}
 	for (int i = 0; i < 26; ++i) {
-		std::cout << (char)(i + 'a') << "의 개수는 " << c[i] << std::endl;
-	}
+		std::cout << static_cast<char>(i + 'a') << "의 개수는 " << c[i] << std::endl;
+	}	//static_cast쓰는 이유 형변환 엄격한 C++에서 유지보수 하기 편하려고 사용
 
 	(*save)("소스.cpp");//정석 함수 호출
 }
