@@ -22,11 +22,16 @@ int main()
 	//가장 큰 값을 찾아 화면에 출력하라. 
 
 	std::ifstream in{ "랜덤값 몇개.mp3" };
+	if (not in) {		// 에러 확인 필수 
+		std::cout << "불러오기 실패" << std::endl;
+		return 333;
+	}
 
-	int count{ 0 }, max{ -1 };
-	while (in) {
-		int num;
-		in >> num;
+	int count{ 0 }, max{ -1 }, num;
+	while (in>>num) {	//!in.eof() 사용하지 않기  : in >> num 사용하기 
+	/*	int num;
+		in >> num;*/
+
 		++count;
 		max = (max < num) ? num : max;
 	}
