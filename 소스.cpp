@@ -16,28 +16,21 @@
 
 int main()
 {
-	//[문제] 파일 "메인.cpp"에 사용된 알파벳 소문자의 개수를 출력하라
-	//출력 예
-	// a - 10
-	// b - 2
+	//[문제] 파일 "메인.cpp"의 소문자를 모두 대문자로 바꿔 
+	// "메인대문자.cpp"에 저장하라 
+	//
+	//
 	//
 
 	std::ifstream in{ "소스.cpp" };
-	if (!in) { return 404; }
+	if (not in) return 404;
+	std::ofstream out{ "메인대문자.cpp" };
 
-	char C;
-	int c[26]{};
-	while (in >> C) {
-		/*for (int i = 'a'; i <='z'; ++i) {
-			if (i == C) c[i - 'a'] += 1;
-		}*/
-		if (islower(C)) {
-			c[C - 'a']++;
-		}
+	char c;
+	while (in >> c) {
+		if (islower(c)) out << static_cast<char>(c - ('a' - 'A'));
+		else out << c;
 	}
-	for (int i = 0; i < 26; ++i) {
-		std::cout << static_cast<char>(i + 'a') << "의 개수는 " << c[i] << std::endl;
-	}	//static_cast쓰는 이유 형변환 엄격한 C++에서 유지보수 하기 편하려고 사용
 
 	(*save)("소스.cpp");//정석 함수 호출
 }
