@@ -18,8 +18,8 @@
 
 int main()
 {
-	//[문제] 파일 "메인.cpp"에 있는 단어를 오름차순으로 정렬하여 출력하라.
-	//  
+	//[문제] 파일 "메인.cpp"에 있는 단어를 
+	// 단어의 길이를 기준으로 오름차순으로 정렬하여 출력하라
 	// c++에서 단어의 처리는 std::string을 사용하면 된다
 	//
 	int cnt{};
@@ -35,7 +35,9 @@ int main()
 	std::ifstream in{ "소스.cpp" };
 	std::string* arr = new std::string[cnt];//string은 32바이트
 	int i{ 0 };
-	while (in >> arr[i]) ++i;
+	for (int i = 0; i < cnt; ++i) {
+		in >> arr[i];
+	}
 	
 	qsort(arr, cnt, sizeof(std::string), [](const void* a, const void* b) {
 		const std::string* A = static_cast<const std::string*>(a);
