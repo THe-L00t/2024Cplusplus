@@ -12,28 +12,42 @@
 #include <fstream>
 #include <print>
 #include <string>
+#include <algorithm>
 
 #include "save.h"
 
 int main()
 {
-	//[문제] 파일 "메인.cpp"에 있는 단어의 개수를 출력하라.
-	// 단어는 공백으로 분리된 문자의 집합을 말한다. 
+	//[문제] 파일 "메인.cpp"에 있는 단어를 오름차순으로 정렬하여 출력하라.
+	//  
 	// c++에서 단어의 처리는 std::string을 사용하면 된다
 	//
-	//
+	int cnt{};
+	{
+		std::ifstream in{ "소스.cpp" };
+		if (not in) return 404;
 
-	std::ifstream in{ "소스.cpp" };
-	if (not in) return 404;
-	
-	std::string str;
-	int cnt{ 0 };
-	while (in >> str) {
-		++cnt;
-		std::cout << str << std::endl;
+		std::string str;
+		while (in >> str) {
+			++cnt;
+		}
 	}
+	std::ifstream in{ "소스.cpp" };
+	std::string* arr = new std::string[cnt];//string은 32바이트
+	int i{ 0 };
+	while (in >> arr[i]) ++i;
 	
-	std::cout << cnt << std::endl;
+	qsort(arr, cnt, sizeof(std::string), [](const void* a, const void* b) {
+		const std::string* A = static_cast<const std::string*>(a);
+		const std::string* B = static_cast<const std::string*>(b);
+		return A->compare(*(B));
+		});
+
+	int c{ 0 };
+	while (c<cnt) {
+		std::cout << arr[c] << std::endl;
+		++c;
+	}
 
 	(*save)("소스.cpp");//정석 함수 호출
 }
