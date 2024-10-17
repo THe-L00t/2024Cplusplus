@@ -13,7 +13,10 @@
 
 #include "save.h"
 
-struct Dog {
+//출력하면 8바이트가 할당됨
+//왜냐 3바이트로 빈공간을 만듦 속도를 위해
+// 해당 빈공간을 data padding이라 함
+struct alignas(1024) Dog {//사이즈 조절 가능
 	char c;
 	int a;
 };
