@@ -42,7 +42,7 @@ int main()
 	qsort(arr, cnt, sizeof(std::string), [](const void* a, const void* b) {
 		const std::string* A = static_cast<const std::string*>(a);
 		const std::string* B = static_cast<const std::string*>(b);
-		return A->compare(*(B));
+		return static_cast<int>(A->length() - B->length());
 		});
 
 	int c{ 0 };
