@@ -5,53 +5,38 @@
 //--------------------------------------------------------------------------------------
 // 10.31(목) - 9주 1일차 - 중간 시험
 //--------------------------------------------------------------------------------------
-// file I/O
+// 사용자 정의 자료형
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
-#include <fstream>
-#include <print>
 #include <string>
-#include <algorithm>
 
 #include "save.h"
 
+//struct와 class를 사용하여 새 자료형을 만든다. 
+class person {
+	std::string name{ "응애" };
+private:		//access modifier - class default
+
+}typedef Person;
+struct Dog {
+public:			//struct default
+	std::string name{ "응애" };
+	int age;
+	int kind;
+	char color;
+
+	void bark();
+	void run();
+}typedef Dog;
 
 int main()
-{
-	//[문제] 파일 "메인.cpp"에 있는 단어를 
-	// 단어의 길이를 기준으로 오름차순으로 정렬하여 출력하라
-	// c++에서 단어의 처리는 std::string을 사용하면 된다
-	//
-	int cnt{};
-	{
-		std::ifstream in{ "소스.cpp" };
-		if (not in) return 404;
-
-		std::string str;
-		while (in >> str) {
-			++cnt;
-		}
-	}
-	std::ifstream in{ "소스.cpp" };
-	std::string* arr = new std::string[cnt];//string은 32바이트
-	int i{ 0 };
-	for (int i = 0; i < cnt; ++i) {
-		in >> arr[i];
-	}
-	
-	qsort(arr, cnt, sizeof(std::string), [](const void* a, const void* b) {
-		const std::string* A = static_cast<const std::string*>(a);
-		const std::string* B = static_cast<const std::string*>(b);
-		return static_cast<int>(A->length() - B->length());
-		});
-
-	int c{ 0 };
-	while (c<cnt) {
-		std::cout << arr[c] << std::endl;
-		++c;
-	}
-
+{	
+	Dog p;
+	std::cout << p.name << std::endl;
+	p.name = "응애요";	//바꾸지 못하게 하려면 클래스로 선언
+	std::cout << p.name << std::endl;
+	Dog d;
 	(*save)("소스.cpp");//정석 함수 호출
 }
 
