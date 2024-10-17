@@ -3,7 +3,7 @@
 //
 // 참고 -  c++ core guideline 
 //--------------------------------------------------------------------------------------
-// 10.31(목) - 9주 1일차 - 중간 시험예상
+// 10.31(목) - 9주 1일차 - 중간 시험
 //--------------------------------------------------------------------------------------
 // file I/O
 //--------------------------------------------------------------------------------------
@@ -11,30 +11,29 @@
 #include <iostream>
 #include <fstream>
 #include <print>
+#include <string>
 
 #include "save.h"
 
 int main()
 {
-	//[문제] 파일 "메인.cpp"의 소문자를 모두 대문자로 바꿔 
-	// "메인대문자.cpp"에 저장하라 
-	//
+	//[문제] 파일 "메인.cpp"에 있는 단어의 개수를 출력하라.
+	// 단어는 공백으로 분리된 문자의 집합을 말한다. 
+	// c++에서 단어의 처리는 std::string을 사용하면 된다
 	//
 	//
 
 	std::ifstream in{ "소스.cpp" };
 	if (not in) return 404;
-	std::ofstream out{ "메인대문자.cpp" };
-
-	char c;
-	in >> std::noskipws;
-	while (in >> c) {
-		char ch = toupper(c);
-		out << ch;
-		//out << static_cast<char>(toupper(c));
-		/*if (islower(c)) out << static_cast<char>(c - ('a' - 'A'));
-		else out << c;*/
+	
+	std::string str;
+	int cnt{ 0 };
+	while (in >> str) {
+		++cnt;
+		std::cout << str << std::endl;
 	}
+	
+	std::cout << cnt << std::endl;
 
 	(*save)("소스.cpp");//정석 함수 호출
 }
