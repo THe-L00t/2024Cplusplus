@@ -10,48 +10,42 @@
 
 #include <iostream>
 #include <string>
-#include <cmath>
+#include <Windows.h>
+#include <mmsystem.h>
+
 
 #include "save.h"
 
+#pragma comment( lib, "winmm.lib")
 
-struct Point2D {
-	//variable member
-	int x;			//호출되면 해당 크기만큼 메모리에 할당
-	int y;
+class Dog {
+	//멤버 변수를 바깥에 공개하는 것이 유리하면 struct 
+	//멤버 변수를 공개하지 않는 것이 맞다면 class
+private:		//default access-modifier
+	std::string name{}; //32바이트
+	int age{};	//4바이트
 
-	//함수들 - special 함수 6가지 : 객체의 생사와 관련되어있다. 
-	Point2D() : x{ 2024 }, y{ 1023 } {		//default creator(ctor)
-			//생성자 내부 초기화 보다 위의 방법이 조금더 빠르다.
+public: //싱글턴 공부하기, private에 생성자 넣지 않도록 하기 
+	Dog() {	//생성자만 오버로딩 가능
+		PlaySound(L"개소리.wav",NULL,SND_SYNC);
+		std::cout << "소리남" << std::endl;
 	}
-	//Point2D() = default; 이 방법으로도 가능, 알아서 0으로 초기화 
-	//결국 명시적으로 생성자를 만들지 않아도 내부에서 맴버변수를 초기화 해둘 수 있다. 
-
-
-	//function member
-	void show() {	//함수만 코드 세그먼트에 저장
-		std::cout <<"("<< x << ", " << y <<")" << std::endl;
+	Dog(std::string name) : name{ name } { std::cout << this->name <<"소리남" << std::endl; }
+	Dog(int age) : age{ age } {}
+	Dog(std::string name, int age) : name{ name }, age{ age } {}
+	~Dog() {
+		PlaySound(L"죽는소리.wav", NULL, SND_SYNC);
+		std::cout << name << "죽는소리 남" << std::endl;
 	}
-	double distance() {	//원점에서의 거리 
-		return std::sqrt((x * x) + (y * y));
-	}
-
-
 };
-
-//객체가 만들어 지는 단계
-//1. instancing : 메모리에 객체 크기만큼 할당, 이때 우리가 건드릴 수 있는건 없다.
-//* 이때 컴파일러는 객체 값을 어떻게 initialize할 지 모른다. 
-//2. initialize : 객체를 사용자의 의도대로 초기화 
-//* 생성자를 통해 어떻게 초기화할지 정해둔다. 그럼 컴파일러는 instancing 후 
-//	생성자를 참고하여 초기화 한다. 
-
 
 int main()
 {	
-	Point2D p;
-	p.show();
-
+	Dog dog("1");
+	{	//지역 객체의 life cycle
+		Dog dog("2");
+	}
+	
 	(*save)("소스.cpp");//정석 함수 호출
 }
 
