@@ -13,16 +13,20 @@
 
 #include "save.h"
 
-//출력하면 8바이트가 할당됨
-//왜냐 3바이트로 빈공간을 만듦 속도를 위해
-// 해당 빈공간을 data padding이라 함
-struct alignas(1024) Dog {//사이즈 조절 가능
-	char c;
-	int a;
+//struct 와 class를 사용하여 새 자료형을 만든다.
+
+//2차원 점을 표현하는 사용자 정의 자료형
+
+class Point2D;
+
+struct Point2D {
+	int x;
+	int y;
 };
+
+
 int main()
 {	
-	Dog dog;
 	(*save)("소스.cpp");//정석 함수 호출
 }
 
