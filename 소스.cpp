@@ -10,46 +10,47 @@
 
 #include <iostream>
 #include <string>
-#include <random>
 #include <cmath>
 
 #include "save.h"
 
-std::default_random_engine dre;
-std::uniform_int_distribution uid{ -99,99 };
 
 struct Point2D {
 	//variable member
-	int x{ uid(dre) };
-	int y{ uid(dre) };
+	int x;			//호출되면 해당 크기만큼 메모리에 할당
+	int y;
+
+	//함수들 - special 함수 6가지 : 객체의 생사와 관련되어있다. 
+	Point2D() : x{ 2024 }, y{ 1023 } {		//default creator(ctor)
+			//생성자 내부 초기화 보다 위의 방법이 조금더 빠르다.
+	}
+	//Point2D() = default; 이 방법으로도 가능, 알아서 0으로 초기화 
+	//결국 명시적으로 생성자를 만들지 않아도 내부에서 맴버변수를 초기화 해둘 수 있다. 
+
 
 	//function member
-	void show() {
+	void show() {	//함수만 코드 세그먼트에 저장
 		std::cout <<"("<< x << ", " << y <<")" << std::endl;
 	}
 	double distance() {	//원점에서의 거리 
 		return std::sqrt((x * x) + (y * y));
 	}
 
+
 };
+
+//객체가 만들어 지는 단계
+//1. instancing : 메모리에 객체 크기만큼 할당, 이때 우리가 건드릴 수 있는건 없다.
+//* 이때 컴파일러는 객체 값을 어떻게 initialize할 지 모른다. 
+//2. initialize : 객체를 사용자의 의도대로 초기화 
+//* 생성자를 통해 어떻게 초기화할지 정해둔다. 그럼 컴파일러는 instancing 후 
+//	생성자를 참고하여 초기화 한다. 
 
 
 int main()
 {	
-	Point2D points[100];	//instancing : 메모리에 생성
-	//for (Point2D point : points) point.show();
-
-	//[문제] (0,0)에서 반경 20 미만의 점에 영향을 미치는 폭탄이 터졌다. 
-	//영향 받는 점들의 좌표를 화면에 출력하고, 모두 몇 개인지 출력하라 
-	//root 값은 함수를 이용하여 구할 수 있다. 
-	int count{ 0 };
-	for (Point2D point : points) {
-		if (20 > point.distance()) {
-			++count;
-			point.show();
-		} 
-	}
-	std::cout << "반경 내의 점의 개수 :" << count << std::endl;
+	Point2D p;
+	p.show();
 
 	(*save)("소스.cpp");//정석 함수 호출
 }
