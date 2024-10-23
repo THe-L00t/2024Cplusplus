@@ -17,16 +17,23 @@
 
 //2차원 점을 표현하는 사용자 정의 자료형
 
-class Point2D;
 
 struct Point2D {
+	//variable member
 	int x;
 	int y;
+
+	//function member
+	void show() {
+		std::cout <<"("<< x << ", " << y <<")" << std::endl;
+	}
 };
 
 
 int main()
 {	
+	Point2D points[100];	//instancing : 메모리에 생성
+	for (Point2D point : points) point.show();
 	(*save)("소스.cpp");//정석 함수 호출
 }
 
