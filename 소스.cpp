@@ -25,11 +25,14 @@ public:
 		for (int i = 0; i < num; ++i) {
 			arrnum[i] = i + 1;
 		}
+		std::cout << "생성자 호출" << this << std::endl;
 	}
 
 	~MemoryMonster();	//정식 함수 선언
 	
-	
+	//복사 생성자 - copy constructor
+	//이거 코딩 안해도 컴파일러가 이 함수를 자동으로 생성한다 - special function
+	MemoryMonster(const MemoryMonster& other);
 	
 	//interface function
 	void show() {
@@ -41,21 +44,27 @@ public:
 
 MemoryMonster::~MemoryMonster() {	//special function
 	delete[] arrnum;
+	std::cout << "소멸자 호출" << this <<std::endl;
+}
+
+MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num }, arrnum{ other.arrnum } {
+	std::cout << "복사 생성자" << this << std::endl;
 }
 
 int main()
 {	
-	//[문제] 다음 코드가 문제없이 실행되도록 하자 
-	// MemoryMonster는 생성시에 전달된 int 개수만큼 int를 저장할 
-	// 메모리를 확보한다. 메모리의 값을 1부터 시작하는 정수로 채워나간다. 
+	//[문제] 실행 후 결과를 설명하라 
+	// 
+	// 
 
-	std::cout << "int input: ";
-	int num;
-	std::cin >> num;
+	MemoryMonster a( 100 );
+	MemoryMonster b{ a };	//b = a
+	//b는 a의 int와 int*값을 그대로 복사하여 생성한다. 그리고 b가 사라지며 
+	//원래 a가 가리키고 있던 free store메모리가 할당 해제되어 
+	//a에서 댕글링 포인터를 반환하게 된다. 결국 프로그램이 죽는다. 
 
-	MemoryMonster a{ num };
+	//기본 생성자는 정의하지 않아도 알아서 실행 => 스페셜 함수 
 
-	a.show();	//1부터 num까지 숫자가 화면에 출력되어야 겠다.
-	std::cout << "main end" << std::endl;
+	save("소스.cpp");
 }
 
