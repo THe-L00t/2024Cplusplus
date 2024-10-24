@@ -12,43 +12,44 @@
 
 #include <iostream>
 #include <string>
-#include <Windows.h>
-#include <mmsystem.h>
-
 
 #include "save.h"
 
-#pragma comment( lib, "winmm.lib")
-
-class Dog {
-	
-private:		//default access-modifier
-	std::string name{}; //32바이트
-	int age{};	//4바이트
-
-public: //싱글턴 공부하기, private에 생성자 넣지 않도록 하기 
-	Dog() {	//생성자만 오버로딩 가능
-		PlaySound(L"개소리.wav",NULL,SND_SYNC);
-		std::cout << "소리남" << std::endl;
+class MemoryMonster {
+private:
+	int* arrnum;
+	int num;
+public:
+	MemoryMonster(int n) :num{ n } { 
+		arrnum = new int[num];
+		for (int i = 0; i < num; ++i) {
+			arrnum[i] = i + 1;
+		}
 	}
-	Dog(std::string name) : name{ name } { std::cout << this->name <<"소리남" << std::endl; }
-	Dog(int age) : age{ age } {}
-	Dog(std::string name, int age) : name{ name }, age{ age } {}
-	~Dog() {
-		PlaySound(L"죽는소리.wav", NULL, SND_SYNC);
-		std::cout << name << "죽는소리 남" << std::endl;
+
+	~MemoryMonster() {
+		delete[] arrnum;
+	}
+	void show() {
+		for (int i = 0; i < num; ++i) {
+			std::cout << arrnum[i] << std::endl;
+		}
 	}
 };
 
 int main()
 {	
-	std::cout << "메인 시작 전" << std::endl;
+	//[문제] 다음 코드가 문제없이 실행되도록 하자 
+	// MemoryMonster는 생성시에 전달된 int 개수만큼 int를 저장할 
+	// 메모리를 확보한다. 메모리의 값을 1부터 시작하는 정수로 채워나간다. 
 
-	Dog* pD = new Dog;
+	std::cout << "int input: ";
+	int num;
+	std::cin >> num;
 
-	//delet[] pD; 프로그램 사망함. 할당과 해제의 짝을 맞출것
-	delete(pD);
-	(*save)("소스.cpp");//정석 함수 호출
+	MemoryMonster a{ num };
+
+	a.show();	//1부터 num까지 숫자가 화면에 출력되어야 겠다.
 	std::cout << "main end" << std::endl;
 }
 
