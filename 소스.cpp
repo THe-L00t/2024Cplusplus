@@ -20,22 +20,28 @@ private:
 	int* arrnum;
 	int num;
 public:
-	MemoryMonster(int n) :num{ n } { 
+	MemoryMonster(int n) :num{ n } {	//non-special function 
 		arrnum = new int[num];
 		for (int i = 0; i < num; ++i) {
 			arrnum[i] = i + 1;
 		}
 	}
 
-	~MemoryMonster() {
-		delete[] arrnum;
-	}
+	~MemoryMonster();	//정식 함수 선언
+	
+	
+	
+	//interface function
 	void show() {
 		for (int i = 0; i < num; ++i) {
-			std::cout << arrnum[i] << std::endl;
+			std::cout << arrnum[i] << " ";
 		}
 	}
 };
+
+MemoryMonster::~MemoryMonster() {	//special function
+	delete[] arrnum;
+}
 
 int main()
 {	
