@@ -20,6 +20,11 @@ private:
 	int* arrnum;
 	int num;
 public:
+	//MemoryMonster() = default;
+	//~MemoryMonster() = default;
+	//MemoryMonster(const MemoryMonster& other) = default;
+	//스페셜 함수라 가능
+
 	MemoryMonster(int n) :num{ n } {	//non-special function 
 		arrnum = new int[num];
 		for (int i = 0; i < num; ++i) {
@@ -47,7 +52,15 @@ MemoryMonster::~MemoryMonster() {	//special function
 	std::cout << "소멸자 호출" << this <<std::endl;
 }
 
-MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num }, arrnum{ other.arrnum } {
+MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num } {
+	arrnum = new int[num];
+
+	////깊은 복사를 이렇게 하면 바보된다. 
+	//for (int i{}; i < num; ++i) arrnum[i] = other.arrnum[i];
+	////cpu가 개입하는 코드 
+	
+	memcpy(arrnum, other.arrnum, sizeof(int) * num);
+
 	std::cout << "복사 생성자" << this << std::endl;
 }
 
@@ -57,7 +70,7 @@ int main()
 	// 
 	// 
 
-	MemoryMonster a( 100 );
+	MemoryMonster a{ 100 };
 	MemoryMonster b{ a };	//b = a
 	//b는 a의 int와 int*값을 그대로 복사하여 생성한다. 그리고 b가 사라지며 
 	//원래 a가 가리키고 있던 free store메모리가 할당 해제되어 
