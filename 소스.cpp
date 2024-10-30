@@ -16,7 +16,7 @@
 #include "save.h"
 
 class MemoryMonster {
-private:
+public:
 	int* arrnum;
 	int num;
 public:
@@ -39,6 +39,11 @@ public:
 	//이거 코딩 안해도 컴파일러가 이 함수를 자동으로 생성한다 - special function
 	MemoryMonster(const MemoryMonster& other);
 	
+	MemoryMonster operator=(MemoryMonster& other) {
+		delete[] this->arrnum;
+		arrnum = new int[other.num];
+		memcpy(arrnum, other.arrnum, sizeof(int) * num);
+	}
 	//interface function
 	void show() const/* cv-qualifier */ { //const 위치 중요 : 멤버변수의 값을 바꾸지 않겠다. 
 		for (int i = 0; i < num; ++i) {
@@ -67,14 +72,13 @@ MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num } {
 
 int main()
 {	
-	MemoryMonster a[3]{ 3,5,7 };
-
-	//for loop르 사용하여 a의 show()를 호출하라
-	for (const MemoryMonster& a : a) {
-		a.show();
-	}//래퍼런스 유무에 따른 메모리 사용량 차이 보기 
-	//중요
-
+	MemoryMonster a{ 3 };
+	MemoryMonster b{ 5 };
+	std::cout << b.arrnum << " " << a.arrnum << std::endl;
+	a = b;
+	std::cout << b.arrnum << " " << a.arrnum << std::endl;
+	a.show();
+	b.show();
 	save("소스.cpp");
 }
 
