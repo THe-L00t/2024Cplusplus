@@ -20,10 +20,10 @@ private:
 	int* arrnum;
 	int num;
 public:
-	//MemoryMonster() = default;
-	//~MemoryMonster() = default;
-	//MemoryMonster(const MemoryMonster& other) = default;
-	//스페셜 함수라 가능
+	MemoryMonster() {
+		std::cout << "디폴트 생성자" << this << std::endl;
+	};
+	
 
 	MemoryMonster(int n) :num{ n } {	//non-special function 
 		arrnum = new int[num];
@@ -40,10 +40,11 @@ public:
 	MemoryMonster(const MemoryMonster& other);
 	
 	//interface function
-	void show() {
+	void show() const/* cv-qualifier */ { //const 위치 중요 : 멤버변수의 값을 바꾸지 않겠다. 
 		for (int i = 0; i < num; ++i) {
 			std::cout << arrnum[i] << " ";
 		}
+		std::cout << std::endl;
 	}
 };
 
@@ -66,19 +67,13 @@ MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num } {
 
 int main()
 {	
-	//[문제] 실행 후 결과를 설명하라 
-	// 
-	// 
+	MemoryMonster a[3]{ 3,5,7 };
 
-	MemoryMonster a{ 100 };
-	MemoryMonster b{ a };	//b = a
-	//b는 a의 int와 int*값을 그대로 복사하여 생성한다. 그리고 b가 사라지며 
-	//원래 a가 가리키고 있던 free store메모리가 할당 해제되어 
-	//a에서 댕글링 포인터를 반환하게 된다. 결국 프로그램이 죽는다. 
-
-	//기본 생성자는 정의하지 않아도 알아서 실행 => 스페셜 함수 
-
-	//deep copy 공부해보기 
+	//for loop르 사용하여 a의 show()를 호출하라
+	for (const MemoryMonster& a : a) {
+		a.show();
+	}//래퍼런스 유무에 따른 메모리 사용량 차이 보기 
+	//중요
 
 	save("소스.cpp");
 }
