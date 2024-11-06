@@ -43,6 +43,7 @@ public:
 		delete[] this->arrnum;
 		arrnum = new int[other.num];
 		memcpy(arrnum, other.arrnum, sizeof(int) * num);
+		return *this;
 	}
 	//interface function
 	void show() const/* cv-qualifier */ { //const 위치 중요 : 멤버변수의 값을 바꾸지 않겠다. 
@@ -82,3 +83,34 @@ int main()
 	save("소스.cpp");
 }
 
+
+// 시험 답 1
+// 자료형 A크기를 갖는 메모리 B개를 free-store에 요청한다. 
+//cout << sizeof(A)*B <<endl;
+
+//2
+//cin이 읽어오다가 형식이 다르면 읽지 못한다. 그러나 내용은 버퍼에 남아있게 되어 
+// 루프를 돌며 무한히 반복하게 된다. 
+// 오류가 났다면 오류를 제거한다. => 버퍼를 지운다. 
+// if(not cin){ 
+//		cin.clear();
+//		while (cin.get() != '\n')
+//			;
+//		continue;
+// }
+
+//3
+// 지역 객체이고 디폴트 생성자이지만 스택에 만들어진 각 멤버변수의 값을 초기화 하지 않는다. 결국
+// 스택에 있던 초기화 되지 않은 값이 출력된다. 
+
+//4
+// 1. 스택 오버플로우 
+// 2. 컴파일러 최적화, 결국 돌아감
+
+//5 
+//함수 오버로딩
+// void toupper(char& c){
+// c = std::toupper(c);
+// }
+
+//6 
