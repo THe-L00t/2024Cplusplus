@@ -20,6 +20,15 @@ public:
 	int* arrnum;
 	int num;
 public:
+	/*MemoryMonster() = default;
+	~MemoryMonster() = default;
+	
+	MemoryMonster( const MemoryMonster& other ) = default;
+	MemoryMonster& operator=( const MemoryMonster& other ) = default;
+	
+	MemoryMonster( MemoryMonster&& other ) = default;
+	MemoryMonster& operator=( MemoryMonster&& other ) = default;
+	*/
 	MemoryMonster() {
 		std::cout << "디폴트 생성자" << this << std::endl;
 	};
@@ -39,10 +48,14 @@ public:
 	//이거 코딩 안해도 컴파일러가 이 함수를 자동으로 생성한다 - special function
 	MemoryMonster(const MemoryMonster& other);
 	
-	MemoryMonster operator=(MemoryMonster& other) {
+	MemoryMonster& operator=(const MemoryMonster& other) {
 		delete[] this->arrnum;
-		arrnum = new int[other.num];
-		memcpy(arrnum, other.arrnum, sizeof(int) * num);
+	
+		num = other.num;
+		arrnum = new int[num];
+		memcpy(arrnum, other.arrnum, sizeof(int) * num);//DMA
+		std::cout << "복사 할당 연산자 호출" << this << std::endl;
+
 		return *this;
 	}
 	//interface function
@@ -76,7 +89,7 @@ int main()
 	MemoryMonster a{ 3 };
 	MemoryMonster b{ 5 };
 	std::cout << b.arrnum << " " << a.arrnum << std::endl;
-	a = b;
+	a = b;	//copy assignment operator가 개입하는 special 한 순간
 	std::cout << b.arrnum << " " << a.arrnum << std::endl;
 	a.show();
 	b.show();
@@ -84,33 +97,3 @@ int main()
 }
 
 
-// 시험 답 1
-// 자료형 A크기를 갖는 메모리 B개를 free-store에 요청한다. 
-//cout << sizeof(A)*B <<endl;
-
-//2
-//cin이 읽어오다가 형식이 다르면 읽지 못한다. 그러나 내용은 버퍼에 남아있게 되어 
-// 루프를 돌며 무한히 반복하게 된다. 
-// 오류가 났다면 오류를 제거한다. => 버퍼를 지운다. 
-// if(not cin){ 
-//		cin.clear();
-//		while (cin.get() != '\n')
-//			;
-//		continue;
-// }
-
-//3
-// 지역 객체이고 디폴트 생성자이지만 스택에 만들어진 각 멤버변수의 값을 초기화 하지 않는다. 결국
-// 스택에 있던 초기화 되지 않은 값이 출력된다. 
-
-//4
-// 1. 스택 오버플로우 
-// 2. 컴파일러 최적화, 결국 돌아감
-
-//5 
-//함수 오버로딩
-// void toupper(char& c){
-// c = std::toupper(c);
-// }
-
-//6 
