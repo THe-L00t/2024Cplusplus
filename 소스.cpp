@@ -74,6 +74,9 @@ public:
 	bool operator<(const MemoryMonster& other) {
 		return this->num < other.num;
 	}
+	int operator-(const MemoryMonster& other) {
+		return this->num - other.num;
+	}
 
 	//interface function
 	//cv = const / valotile
@@ -89,7 +92,7 @@ public:
 	}
 
 	void Msort();
-	int GetNum();
+	int GetNum() const;
 };
 
 MemoryMonster::~MemoryMonster() {	//special function
@@ -116,7 +119,7 @@ void MemoryMonster::Msort()
 		});
 }
 
-int MemoryMonster::GetNum()
+int MemoryMonster::GetNum() const
 {
 	return this->num;
 }
@@ -127,7 +130,7 @@ int main()
 	MemoryMonster mons[30];
 
 	//오름차순 정렬
-	for (int i = 1; i < 30; ++i)
+	/*for (int i = 1; i < 30; ++i)
 	{
 		MemoryMonster temp{ 1 };
 		for (int j = 0; j < 29; ++j) {
@@ -137,7 +140,12 @@ int main()
 				mons[i] = temp;
 			}
 		}
-	}
+	}*/
+	qsort(mons, 30, sizeof(MemoryMonster), [](const int* a, const int* b) {
+		MemoryMonster& m1 = *(MemoryMonster*)a;
+		MemoryMonster& m2 = *(MemoryMonster*)b;
+		return static_cast<int>(m1.GetNum() - m2.GetNum());
+		});
 
 	for (MemoryMonster& mon : mons)
 		mon.Msort();
