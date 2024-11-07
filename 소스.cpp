@@ -5,9 +5,9 @@
 //--------------------------------------------------------------------------------------
 // 10.31(목) - 9주 1일차 - 중간 시험
 //--------------------------------------------------------------------------------------
-// special member - 디폴트 생성자 / 소멸자
-//					복사생성자/복사할당연산자
-//					이동생성자/이동할당연산자
+// 연산자 오버로딩
+// std::string 을 흉내낸 STRING을 작성
+// int를 흉내낸 INT를 작성하여 연산자를 오버로딩할 필요성
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
@@ -16,144 +16,35 @@
 
 #include "save.h"
 
-std::default_random_engine dre;
-std::uniform_int_distribution uid(10,99);
-
-
-class MemoryMonster {
-public:
-	int num;
-	int* arrnum;
-public:
-	/*MemoryMonster() = default;
-	~MemoryMonster() = default;
-	
-	MemoryMonster( const MemoryMonster& other ) = default;
-	MemoryMonster& operator=( const MemoryMonster& other ) = default;
-	
-	MemoryMonster( MemoryMonster&& other ) = default;
-	MemoryMonster& operator=( MemoryMonster&& other ) = default;
-	*/
-	MemoryMonster() :num{ uid(dre) }/*, arrnum(new int{num})*/ {//옆 처럼 사용하면 오류 뜸 
-		arrnum = new int[num];
-		for (int i = 0; i < num; ++i) {
-			arrnum[i] = uid(dre);
-		}
-		std::cout << "디폴트 생성자" << this << "-"<<num << std::endl;
-	};
-	
-
-	MemoryMonster(int n) :num{ n } {	//non-special function 
-		arrnum = new int[num];
-		for (int i = 0; i < num; ++i) {
-			arrnum[i] = i + 1;
-		}
-		std::cout << "생성자 호출" << this <<" - "<<num << std::endl;
-	}
-
-	~MemoryMonster();	//정식 함수 선언
-	
-	//복사 생성자 - copy constructor
-	//이거 코딩 안해도 컴파일러가 이 함수를 자동으로 생성한다 - special function
-	MemoryMonster(const MemoryMonster& other);
-	
-	MemoryMonster& operator=(const MemoryMonster& other) {
-		// 나를 나로 할당하는 동작을 막아야 겠다. 
-		if (this == &other) return *this;
-
-		delete[] this->arrnum;
-	
-		num = other.num;
-		arrnum = new int[num];
-		memcpy(arrnum, other.arrnum, sizeof(int) * num);//DMA
-		std::cout << "복사 할당 연산자 호출" << this << " - " << num << std::endl;
-
-		return *this;
-	}
-
-	bool operator<(const MemoryMonster& other) {
-		return this->num < other.num;
-	}
-	int operator-(const MemoryMonster& other) {
-		return this->num - other.num;
-	}
-
-	//interface function
-	//cv = const / valotile
-	void show() const/* cv-qualifier */ { //const 위치 중요 : 멤버변수의 값을 바꾸지 않겠다.
-		std::cout << "show " << num << " - ";
-		int 출력개수 = num;
-		if (10 < 출력개수)
-			출력개수 = 10;
-		for (int i = 0; i < 출력개수; ++i) {
-			std::cout << arrnum[i] << " ";
-		}
-		std::cout << std::endl;
-	}
-
-	void Msort();
-	int GetNum() const;
-};
-
-MemoryMonster::~MemoryMonster() {	//special function
-	delete[] arrnum;
-	std::cout << "소멸자 호출" << this << " - " << num <<std::endl;
-}
-
-MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num } {
-	arrnum = new int[num];
-
-	////깊은 복사를 이렇게 하면 바보된다. 
-	//for (int i{}; i < num; ++i) arrnum[i] = other.arrnum[i];
-	////cpu가 개입하는 코드 
-	
-	memcpy(arrnum, other.arrnum, sizeof(int) * num);
-
-	std::cout << "복사 생성자" << this << " - " << num << std::endl;
-}
-
-void MemoryMonster::Msort()
-{
-	qsort(arrnum, num, sizeof(int), [](const void* a, const void* b) {
-		return *(int*)a - *(int*)b;
-		});
-}
-
-int MemoryMonster::GetNum() const
-{
-	return this->num;
-}
 
 int main()
 {	
-	//[문제] 다음 MemoryMonster를 num 기준 오름차순으로 정렬하라 
-	MemoryMonster mons[30];
+	//[문제] 이 코드가 문제없이 실행되도록 class string을 코딩하라 
+	//적어도 아래 2 줄은 여러분 모두 코딩할 수 있습니다. 
+	// 다음 주 올 때까지 살려주세요. 
 
-	//오름차순 정렬
-	/*for (int i = 1; i < 30; ++i)
+	class STRING {
+	public:
+		STRING(const char* str);
+		int size();
+		const char* operator[]();
+	};
+
+	//std::string s{ "The C++ Progamming Language. " };
+	STRING s{ "The C++ Progamming Language. " };
+
+	std::cout << "s의 글자 수 - " << s.size() << std::endl;
+
+	for (int i = 0; i < s.size(); i++)
 	{
-		MemoryMonster temp{ 1 };
-		for (int j = 0; j < 29; ++j) {
-			if (mons[i] < mons[j]  ) {
-				temp = mons[j]; 
-				mons[j] = mons[i];
-				mons[i] = temp;
-			}
-		}
-	}*/
-	qsort(mons, 30, sizeof(MemoryMonster), [](const int* a, const int* b) {
-		MemoryMonster& m1 = *(MemoryMonster*)a;
-		MemoryMonster& m2 = *(MemoryMonster*)b;
-		return static_cast<int>(m1.GetNum() - m2.GetNum());
-		});
+		std::cout << s[i] << "-";
+	}
 
-	for (MemoryMonster& mon : mons)
-		mon.Msort();
-	for (const MemoryMonster& mon : mons) 
-		mon.show();
-	
+	for (char c : s)
+		std::cout << c << "-";
 
-
+	s = s + "정말 재미있는 언어네요. 배우고 싶어서 잠이 안와요 ";
+	std::cout << "s의 글자 수 - " << s.size() << std::endl;
 
 	save("소스.cpp");
 }
