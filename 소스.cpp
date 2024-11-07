@@ -49,6 +49,9 @@ public:
 	MemoryMonster(const MemoryMonster& other);
 	
 	MemoryMonster& operator=(const MemoryMonster& other) {
+		// 나를 나로 할당하는 동작을 막아야 겠다. 
+		if (this == &other) return *this;
+
 		delete[] this->arrnum;
 	
 		num = other.num;
@@ -92,16 +95,12 @@ MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num } {
 
 int main()
 {	
-	MemoryMonster mons[3]{ 10, 30, 20 };
+	//[문제] MemoryMonster
+	MemoryMonster a{ 12 };
+	a = a = a;	// 우에서 좌로 연산 시작
 
-	// & - 객체를 복사하지 않겠다. 원격으로 R/W하겠다.
-	// const & - 원격으로 R만 하겠다. 
-	// const - 메모리를 읽기만 할거다. 
-	// const correctness ( consistency ) ->> effective c++ 공부해보기 
-	for (const MemoryMonster& mon : mons) 
-	{
-		mon.show();	//인자가 없어도 dispointer로 숨은 인자 mon이 넘어감
-	}
+	int n{ 0 };
+	n = n = n = ++n = n;// n++ 는 안된다. 
 
 
 	save("소스.cpp");
