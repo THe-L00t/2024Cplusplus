@@ -58,7 +58,9 @@ public:
 
 		return *this;
 	}
+
 	//interface function
+	//cv = const / valotile
 	void show() const/* cv-qualifier */ { //const 위치 중요 : 멤버변수의 값을 바꾸지 않겠다.
 		std::cout << "show " << num << " - ";
 		int 출력개수 = num;
@@ -92,7 +94,11 @@ int main()
 {	
 	MemoryMonster mons[3]{ 10, 30, 20 };
 
-	for (MemoryMonster& mon : mons) //요 부분
+	// & - 객체를 복사하지 않겠다. 원격으로 R/W하겠다.
+	// const & - 원격으로 R만 하겠다. 
+	// const - 메모리를 읽기만 할거다. 
+	// const correctness ( consistency ) ->> effective c++ 공부해보기 
+	for (const MemoryMonster& mon : mons) 
 	{
 		mon.show();	//인자가 없어도 dispointer로 숨은 인자 mon이 넘어감
 	}
