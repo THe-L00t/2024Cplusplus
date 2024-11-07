@@ -11,9 +11,14 @@
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
+#include <random>
 #include <string>
 
 #include "save.h"
+
+std::default_random_engine dre;
+std::uniform_int_distribution uid(10,99);
+
 
 class MemoryMonster {
 public:
@@ -29,7 +34,11 @@ public:
 	MemoryMonster( MemoryMonster&& other ) = default;
 	MemoryMonster& operator=( MemoryMonster&& other ) = default;
 	*/
-	MemoryMonster() {
+	MemoryMonster() :num{ uid(dre) }/*, arrnum(new int{num})*/ {//옆 처럼 사용하면 오류 뜸 
+		arrnum = new int[num];
+		for (int i = 0; i < num; ++i) {
+			arrnum[i] = uid(dre);
+		}
 		std::cout << "디폴트 생성자" << this << "-"<<num << std::endl;
 	};
 	
@@ -62,6 +71,10 @@ public:
 		return *this;
 	}
 
+	bool operator<(const MemoryMonster& other) {
+		return this->num < other.num;
+	}
+
 	//interface function
 	//cv = const / valotile
 	void show() const/* cv-qualifier */ { //const 위치 중요 : 멤버변수의 값을 바꾸지 않겠다.
@@ -74,6 +87,9 @@ public:
 		}
 		std::cout << std::endl;
 	}
+
+	void Msort();
+	int GetNum();
 };
 
 MemoryMonster::~MemoryMonster() {	//special function
@@ -93,14 +109,42 @@ MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num } {
 	std::cout << "복사 생성자" << this << " - " << num << std::endl;
 }
 
+void MemoryMonster::Msort()
+{
+	qsort(arrnum, num, sizeof(int), [](const void* a, const void* b) {
+		return *(int*)a - *(int*)b;
+		});
+}
+
+int MemoryMonster::GetNum()
+{
+	return this->num;
+}
+
 int main()
 {	
-	//[문제] MemoryMonster
-	MemoryMonster a{ 12 };
-	a = a = a;	// 우에서 좌로 연산 시작
+	//[문제] 다음 MemoryMonster를 num 기준 오름차순으로 정렬하라 
+	MemoryMonster mons[30];
 
-	int n{ 0 };
-	n = n = n = ++n = n;// n++ 는 안된다. 
+	//오름차순 정렬
+	for (int i = 1; i < 30; ++i)
+	{
+		MemoryMonster temp{ 1 };
+		for (int j = 0; j < 29; ++j) {
+			if (mons[i] < mons[j]  ) {
+				temp = mons[j]; 
+				mons[j] = mons[i];
+				mons[i] = temp;
+			}
+		}
+	}
+
+	for (MemoryMonster& mon : mons)
+		mon.Msort();
+	for (const MemoryMonster& mon : mons) 
+		mon.show();
+	
+
 
 
 	save("소스.cpp");
