@@ -17,8 +17,8 @@
 
 class MemoryMonster {
 public:
-	int* arrnum;
 	int num;
+	int* arrnum;
 public:
 	/*MemoryMonster() = default;
 	~MemoryMonster() = default;
@@ -30,7 +30,7 @@ public:
 	MemoryMonster& operator=( MemoryMonster&& other ) = default;
 	*/
 	MemoryMonster() {
-		std::cout << "디폴트 생성자" << this << std::endl;
+		std::cout << "디폴트 생성자" << this << "-"<<num << std::endl;
 	};
 	
 
@@ -39,7 +39,7 @@ public:
 		for (int i = 0; i < num; ++i) {
 			arrnum[i] = i + 1;
 		}
-		std::cout << "생성자 호출" << this << std::endl;
+		std::cout << "생성자 호출" << this <<" - "<<num << std::endl;
 	}
 
 	~MemoryMonster();	//정식 함수 선언
@@ -54,13 +54,17 @@ public:
 		num = other.num;
 		arrnum = new int[num];
 		memcpy(arrnum, other.arrnum, sizeof(int) * num);//DMA
-		std::cout << "복사 할당 연산자 호출" << this << std::endl;
+		std::cout << "복사 할당 연산자 호출" << this << " - " << num << std::endl;
 
 		return *this;
 	}
 	//interface function
-	void show() const/* cv-qualifier */ { //const 위치 중요 : 멤버변수의 값을 바꾸지 않겠다. 
-		for (int i = 0; i < num; ++i) {
+	void show() const/* cv-qualifier */ { //const 위치 중요 : 멤버변수의 값을 바꾸지 않겠다.
+		std::cout << "show " << num << " - ";
+		int 출력개수 = num;
+		if (10 < 출력개수)
+			출력개수 = 10;
+		for (int i = 0; i < 출력개수; ++i) {
 			std::cout << arrnum[i] << " ";
 		}
 		std::cout << std::endl;
@@ -69,7 +73,7 @@ public:
 
 MemoryMonster::~MemoryMonster() {	//special function
 	delete[] arrnum;
-	std::cout << "소멸자 호출" << this <<std::endl;
+	std::cout << "소멸자 호출" << this << " - " << num <<std::endl;
 }
 
 MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num } {
@@ -81,18 +85,19 @@ MemoryMonster::MemoryMonster(const MemoryMonster& other) : num{ other.num } {
 	
 	memcpy(arrnum, other.arrnum, sizeof(int) * num);
 
-	std::cout << "복사 생성자" << this << std::endl;
+	std::cout << "복사 생성자" << this << " - " << num << std::endl;
 }
 
 int main()
 {	
-	MemoryMonster a{ 3 };
-	MemoryMonster b{ 5 };
-	std::cout << b.arrnum << " " << a.arrnum << std::endl;
-	a = b;	//copy assignment operator가 개입하는 special 한 순간
-	std::cout << b.arrnum << " " << a.arrnum << std::endl;
-	a.show();
-	b.show();
+	MemoryMonster mons[3]{ 10, 30, 20 };
+
+	for (MemoryMonster& mon : mons) //요 부분
+	{
+		mon.show();	//인자가 없어도 dispointer로 숨은 인자 mon이 넘어감
+	}
+
+
 	save("소스.cpp");
 }
 
