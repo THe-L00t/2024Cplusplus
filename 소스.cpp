@@ -17,29 +17,24 @@
 #include "STRING.h"
 #include "save.h"
 
+extern bool 관찰;
 
 int main()
 {	
-	//[문제] 이 코드가 문제없이 실행되도록 class string을 코딩하라 
-	//적어도 아래 2 줄은 여러분 모두 코딩할 수 있습니다. 
-	// 다음 주 올 때까지 살려주세요. 
+	관찰 = true;
+	STRING s[5]{ "1", "333","55555","22","4444" };
 
-	//std::string s{ "The C++ Progamming Language. " };
-	STRING s{ "The C++ Progamming Language. " };
 
-	std::cout << "s의 글자 수 - " << s.size() << std::endl;
+	//[문제] s를 길이 오름차순으로 정렬하라
+	qsort(s, 5, sizeof(STRING), [](const void* a, const void* b) {
+		STRING& A = *(STRING*)a;
+		STRING& B = *(STRING*)b;
+		return static_cast<int>(A.size() - B.size());
+		});
 
-	/*for (int i = 0; i < s.size(); i++)
-	{
-		std::cout << s[i] << "-";
-	}*/
-
-	//for (char c : s)
-	//	std::cout << c << "-";
-
-	//s = s + "정말 재미있는 언어네요. 배우고 싶어서 잠이 안와요 ";
-	//std::cout << "s의 글자 수 - " << s.size() << std::endl;
-
+	for ( STRING& s : s) {
+		std::cout << s.size() << std::endl;
+	}
 	save("소스.cpp");
 }
 
