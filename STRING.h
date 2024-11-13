@@ -17,6 +17,10 @@ public:
 	STRING( const STRING& );
 	STRING& operator=(const STRING&);
 
+	//연산자 오버로딩 
+	STRING operator+(const char*);	//자기 자신과 하는 연산만 하지 않기에 레퍼런스 출력이 아님
+
 	size_t size() const;
+
 
 };

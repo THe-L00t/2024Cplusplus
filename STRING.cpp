@@ -39,6 +39,12 @@ STRING& STRING::operator=(const STRING& other)
 	return *this;
 }
 
+STRING STRING::operator+(const char* s)
+{
+	//숙제 살려보기
+	return STRING();
+}
+
 size_t STRING::size() const
 {
 	return num;

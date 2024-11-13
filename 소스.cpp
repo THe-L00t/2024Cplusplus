@@ -22,21 +22,22 @@ extern bool 관찰;
 int main()
 {	
 	관찰 = true;
-	STRING s[5]{ "1", "333","55555","22","4444" };
+	STRING s = { "The C++ Programming language!" };
+	std::cout << s.size() << std::endl;
 
-
-	//[문제] s를 길이 오름차순으로 정렬하라
-	qsort(s, 5, sizeof(STRING), [](const void* a, const void* b) {
-		STRING& A = *(STRING*)a;
-		STRING& B = *(STRING*)b;
-		return static_cast<int>(A.size() - B.size());
-		});
-
-	for ( STRING& s : s) {
-		std::cout << s.size() << std::endl;
-	}
+	s = s + "참 재미있다. ";
+	std::cout << s.size() << std::endl;
 	save("소스.cpp");
 }
+
+// X c = a $ b;
+// 기계어가 지원되지 않는 다면 함수 호출로 생각한다. 
+// 결국 함수라 생각하므오 code 세그먼트라 생각한다.
+// 1. a.operator$(b)라는 멤버함수가 있나 찾아본다. 
+// 2. 없다면,X operator$(a,b)라는 전역함수를 찾아본다. 
+// 둘 다 없다면 컴파일 실패 
+
+
 
 
 //혼자 해본거
@@ -58,7 +59,7 @@ STRING::STRING(const char* istr) {
 	ssize = sizeof(istr) + 1;
 	str = new char[ssize];
 	memcpy(str, istr, sizeof(istr));
-	str[ssize - 1] = '\0';
+	str[ssize - 1] = '\0';		//마지막 널은 전혀 신경 쓸 이유가 없다. 
 	/*for (int i = 0; i < sizeof(istr); ++i)
 	{
 		str[i] = str
