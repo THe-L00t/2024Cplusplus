@@ -130,10 +130,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="save.cpp" />
+    <ClCompile Include="STRING.cpp" />
     <ClCompile Include="소스.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="save.h" />
+    <ClInclude Include="STRING.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="2024 2 C++ 수78목78.txt" />

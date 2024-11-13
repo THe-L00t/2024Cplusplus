@@ -14,31 +14,8 @@
 #include <random>
 #include <string>
 
+#include "STRING.h"
 #include "save.h"
-
-class STRING {
-private:
-	size_t num{};
-	char* p{};
-public:
-	STRING() = default;
-	STRING(const char* s) : num{ strlen(s) } {	//RAII
-		p = new char[num];
-		memcpy(p, s, num);
-
-	};
-	~STRING() {
-		delete[] p;
-	}
-	//복사생성자와 복사할당 연산자를 코딩해야 한다. 왜냐? RAII클래스 이기 때문에 
-
-
-	int size() {
-		return num;
-	};
-
-};
-
 
 
 int main()
