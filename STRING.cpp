@@ -41,8 +41,11 @@ STRING& STRING::operator=(const STRING& other)
 
 STRING STRING::operator+(const char* s)
 {
-	//숙제 살려보기
-	return STRING();
+	size_t temp_num = num + strlen(s);
+	char* temp = new char[temp_num];
+	memcpy(temp, p, num);
+	memcpy(temp + num, s, strlen(s));
+	return temp;
 }
 
 size_t STRING::size() const
