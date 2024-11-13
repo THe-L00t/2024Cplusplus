@@ -17,6 +17,7 @@
 #include "save.h"
 
 
+
 int main()
 {	
 	//[문제] 이 코드가 문제없이 실행되도록 class string을 코딩하라 
@@ -24,10 +25,16 @@ int main()
 	// 다음 주 올 때까지 살려주세요. 
 
 	class STRING {
+	private:
+		char* str;
+
 	public:
 		STRING(const char* str);
 		int size();
-		const char* operator[]();
+		const char* operator[](int idx);
+		char* begin();
+		char* end();
+		const char* operator+(const char* other);
 	};
 
 	//std::string s{ "The C++ Progamming Language. " };
