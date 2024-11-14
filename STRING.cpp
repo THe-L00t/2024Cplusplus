@@ -13,7 +13,14 @@ STRING::STRING(const char* s) : num{ strlen(s) }	//RAII
 {	
 		p = new char[num];
 		memcpy(p, s, num);
-		if (관찰) std::cout << "생성자 - " << num << ", " << this << std::endl;
+		if (관찰) std::cout << "생성자(const char*) - " << num << ", " << this << std::endl;
+}
+
+//operator+ 에서 필요하여 만듦
+STRING::STRING(size_t n) : num{n}
+{
+	p = new char[num];
+	if (관찰) std::cout << "생성자(size_t) - " << num << ", " << this << std::endl;
 }
 
 STRING::~STRING()
@@ -41,10 +48,12 @@ STRING& STRING::operator=(const STRING& other)
 
 STRING STRING::operator+(const char* s) const
 {
-	size_t temp_num = num + strlen(s);
-	char* temp = new char[temp_num];
-	memcpy(temp, p, num);
-	memcpy(temp + num, s, strlen(s));
+	STRING temp{ num + strlen(s) };
+	/*size_t temp_num = num + strlen(s);
+	char* temp = new char[temp_num];*/
+	
+	memcpy(temp.p, p, num);
+	memcpy(temp.p + num, s, strlen(s));
 	return temp;
 }
 

@@ -12,6 +12,7 @@ private:
 public:
 	STRING() = default;
 	STRING(const char* s);
+	STRING(size_t);		//+연산을 위해 새로 작성 
 	~STRING();
 		//복사생성자와 복사할당 연산자를 코딩해야 한다. 왜냐? RAII클래스 이기 때문에 
 	STRING( const STRING& );
