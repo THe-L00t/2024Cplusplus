@@ -28,7 +28,8 @@ public:
 	//전역/friend함수 
 	//이러한 전역변수는 해당 클래스의 private에 접근 할 수 있게 해라 
 	friend STRING operator+(const char*, const STRING&);
-	friend std::ostream& operator<<(std::ostream& cout, STRING& output);
+	friend std::ostream& operator<<(std::ostream& os, const STRING& output);
 
+	//입출력연산자 오버로딩은 반드시 friend로 선언되어야 한다. 
 
 };

@@ -72,9 +72,14 @@ STRING operator+(const char* s, const STRING& other)
 	return temp;
 }
 
-std::ostream& operator<<(std::ostream& cout, STRING& output)
+std::ostream& operator<<(std::ostream& os, const STRING& output)
 {
-	cout << output.p;
-	return cout;
+	for (int i = 0; i < output.num; i++)
+	{
+		os << output.p[i];
+	}
+	//os << output.p;
+	return os;
 }
 //ostream은 const가 절대 불가 하다. 프로그램이 진행되면서 계속 변하기 때문에 
+//ostream은 멋대로 작명하지 않도록 할것, os로 할것
