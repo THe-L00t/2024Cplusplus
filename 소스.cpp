@@ -30,11 +30,14 @@ int main()
 	//copy elision - RVO(Return Value Optimization)
 	관찰 = true;
 	STRING s = { "The C++ Programming language!" };
+
+	//[문제] 다음 코드가 의도대로 실행도게 하라
 	for (int i = 0; i < s.size(); i++)
 	{
-		std::cout << s[i] << std::endl;
+		s[i] = std::toupper(s[i]);
 	}
 
+	std::cout << s << std::endl;
 	//관찰 = false;
 	save("소스.cpp");
 }
