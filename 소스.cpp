@@ -32,28 +32,12 @@ int main()
 	STRING s = { "The C++ Programming language!" };
 	std::cout << s.size() << std::endl;
 
-	STRING c = s + "참 재미있다. ";
-	// 원래라면 operator내부에서 생겨난 temp가 해제되어야 한다. 그러나 컴파일러 최적화 RVO때문에 
-	// 리턴값이 그대로 유지되어 c자체가 되어버린다
-	// s = s + "참 재미있다. ";
-	// 로 제대로 살펴볼 수 있다. 
-
-
-	
-	std::cout << c << std::endl;
+	s =  "참 재미있다. " + s; //살려보기 
+	std::cout << s << std::endl;
 
 	//관찰 = false;
 	save("소스.cpp");
 }
-
-// X c = a $ b;
-// 기계어가 지원되지 않는 다면 함수 호출로 생각한다. 
-// 결국 함수라 생각하므로 code 세그먼트라 생각한다.
-// 1. a.operator$(b)라는 멤버함수가 있나 찾아본다. 
-// 2. 없다면,X operator$(a,b)라는 전역함수를 찾아본다. 
-// 둘 다 없다면 컴파일 실패 
-
-
 
 
 //혼자 해본거

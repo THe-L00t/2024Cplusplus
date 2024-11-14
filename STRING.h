@@ -21,11 +21,14 @@ public:
 	//연산자 오버로딩 
 	STRING operator+(const char*) const;	//자기 자신과 하는 연산만 하지 않기에 레퍼런스 출력이 아님
 	//자기 자신이 변하진 않음 고로 const 붙임
-	friend std::ostream& operator<<(std::ostream& cout, STRING& output);
-
-
-	char* get() const;
+	
+	//인터페이스 함수
 	size_t size() const;
+
+	//전역/friend함수 
+	//이러한 전역변수는 해당 클래스의 private에 접근 할 수 있게 해라 
+	friend STRING operator+(const char*, const STRING&);
+	friend std::ostream& operator<<(std::ostream& cout, STRING& output);
 
 
 };

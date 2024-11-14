@@ -57,18 +57,24 @@ STRING STRING::operator+(const char* s) const
 	return temp;
 }
 
-char* STRING::get() const
-{
-	return p;
-}
 
 size_t STRING::size() const
 {
 	return num;
 }
 
+STRING operator+(const char* s, const STRING& other)
+{
+	STRING temp{ other.num + strlen(s) };
+
+	memcpy(temp.p, s, strlen(s));
+	memcpy(temp.p + strlen(s), other.p, other.num);
+	return temp;
+}
+
 std::ostream& operator<<(std::ostream& cout, STRING& output)
 {
-	cout << output.get();
+	cout << output.p;
 	return cout;
 }
+//ostream은 const가 절대 불가 하다. 프로그램이 진행되면서 계속 변하기 때문에 
