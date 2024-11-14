@@ -39,7 +39,7 @@ STRING& STRING::operator=(const STRING& other)
 	return *this;
 }
 
-STRING STRING::operator+(const char* s)
+STRING STRING::operator+(const char* s) const
 {
 	size_t temp_num = num + strlen(s);
 	char* temp = new char[temp_num];
@@ -48,7 +48,18 @@ STRING STRING::operator+(const char* s)
 	return temp;
 }
 
+char* STRING::get() const
+{
+	return p;
+}
+
 size_t STRING::size() const
 {
 	return num;
+}
+
+std::ostream& operator<<(std::ostream& cout, STRING& output)
+{
+	cout << output.get();
+	return cout;
 }
