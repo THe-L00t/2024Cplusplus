@@ -27,12 +27,22 @@ extern bool 관찰;
 
 int main()
 {	
+	//copy elision - RVO(Return Value Optimization)
 	관찰 = true;
 	STRING s = { "The C++ Programming language!" };
 	std::cout << s.size() << std::endl;
 
-	s = s + "참 재미있다. ";
-	std::cout << s << std::endl;
+	STRING c = s + "참 재미있다. ";
+	// 원래라면 operator내부에서 생겨난 temp가 해제되어야 한다. 그러나 컴파일러 최적화 RVO때문에 
+	// 리턴값이 그대로 유지되어 c자체가 되어버린다
+	// s = s + "참 재미있다. ";
+	// 로 제대로 살펴볼 수 있다. 
+
+
+	
+	std::cout << c << std::endl;
+
+	//관찰 = false;
 	save("소스.cpp");
 }
 
