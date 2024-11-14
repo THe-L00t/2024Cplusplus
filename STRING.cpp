@@ -57,6 +57,11 @@ STRING STRING::operator+(const char* s) const
 	return temp;
 }
 
+char STRING::operator[](size_t idx) const
+{
+	return p[idx];
+}
+
 
 size_t STRING::size() const
 {

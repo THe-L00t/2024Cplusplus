@@ -30,10 +30,10 @@ int main()
 	//copy elision - RVO(Return Value Optimization)
 	관찰 = true;
 	STRING s = { "The C++ Programming language!" };
-	std::cout << s.size() << std::endl;
-
-	s =  "참 재미있다. " + s; //살려보기 
-	std::cout << s << std::endl;
+	for (int i = 0; i < s.size(); i++)
+	{
+		std::cout << s[i] << std::endl;
+	}
 
 	//관찰 = false;
 	save("소스.cpp");
