@@ -38,11 +38,32 @@ STRING::STRING(const STRING& other) : num{other.num}
 
 STRING& STRING::operator=(const STRING& other)
 {
+	if (this == &other)
+		return *this;
 	delete[] p;
 	num = other.num;
 	p = new char[num];
 	memcpy(p, other.p, num);
 	if (관찰) std::cout << "복사할당연산자 - " << num << ", " << this << std::endl;
+	return *this;
+}
+
+STRING::STRING(STRING&& other) : num{other.num}, p{other.p}
+{
+	other.num = 0;
+	other.p = nullptr;
+	if (관찰) std::cout << "이동생성자 - " << num << ", " << this << std::endl;
+}
+
+STRING& STRING::operator=(STRING&& other)
+{
+	if (this == &other)
+		return *this;
+	num = other.num;
+	p = other.p;
+	other.num = 0;
+	other.p = nullptr;
+	if (관찰) std::cout << "이동할당연산자 - " << num << ", " << this << std::endl;
 	return *this;
 }
 

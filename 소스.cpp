@@ -24,8 +24,8 @@ extern bool 관찰;
 
 int main()
 {	
-	std::string s1{ "나는 문자열" };
-	std::string s2 = move(s1);
+	STRING s1 = { "나는 문자열" };
+	STRING s2 = std::move(s1);
 
 	std::cout << s1 << std::endl << s2 << std::endl;
 
@@ -33,4 +33,10 @@ int main()
 	save("소스.cpp");
 }
 
+//xvalue expired 된 값 
+//위의 s1처럼 이동된 빈 값을 가지고 있는 것을 xvalue라고 한다. 
 
+//&	-> ampersand
+//int a; int* p = &a;	-> address of n
+//int& r = n;			-> reference
+//int&& rr = 3;			->rvalue-reference

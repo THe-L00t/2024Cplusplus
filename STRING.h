@@ -17,6 +17,9 @@ public:
 		//복사생성자와 복사할당 연산자를 코딩해야 한다. 왜냐? RAII클래스 이기 때문에 
 	STRING( const STRING& );
 	STRING& operator=(const STRING&);
+		//이동생성자와 이동할당 연산자
+	STRING(STRING&&);	//이동생성자의 역할 
+	STRING& operator=(STRING&&);
 
 	//연산자 오버로딩 
 	STRING operator+(const char*) const;	//자기 자신과 하는 연산만 하지 않기에 레퍼런스 출력이 아님
