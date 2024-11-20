@@ -30,7 +30,12 @@ public:
 	/*~INT(){
 	}*/
 	//operator int() const { return n; }	이것도 답으로 인정
+	INT& operator++() {
+		n = n + 1;
+		return *this;
+	}
 	friend std::ostream& operator<<(std::ostream& os, const INT& n);
+
 
 };
 std::ostream& operator<<(std::ostream& os, const INT& n) {
@@ -40,7 +45,9 @@ int main()
 {
 	//[문제]클래스 INT를 코딩하여 의도대로 실행되게 하라
 	INT n = { 1 };
-	std::cout << n << std::endl;
+
+	//operator++()
+	std::cout << ++n << std::endl;
 	//std::cout << n++ ++ << std::endl; 빨간줄
 	//std::cout << ++++++++++++++n << std::endl;
 
