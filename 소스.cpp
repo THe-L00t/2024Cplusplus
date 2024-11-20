@@ -8,9 +8,9 @@
 // 12/12 목요일 15주 1 - 종강
 // 12/18 수요일 15주 2 - 기말
 // -------------------------------------------------------------------------------------
-// 연산자 오버로딩
-// std::string 을 흉내낸 STRING을 작성
-// int를 흉내낸 INT를 작성하여 연산자를 오버로딩할 필요성
+// move semantics (이동의미론)
+// 
+// 
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
@@ -35,6 +35,13 @@ int main()
 	for (int i = 0; i < s.size(); i++)
 	{
 		s[i] = std::toupper(s[i]);
+		// 식이 수정할 수 있는 lvalue여야 합니다. 
+		//lvalue(location value) = right-value 
+		//value category 찾아보기 
+		//표현식 expression은 glvalue와 rvalue로 나뉜다. 
+		// glvalue	--> lvalue		:xvlaue가 아닌 glvalue
+		//			>-> xvalue		:
+		// rvalue	--> prlvalue	:
 	}
 
 	std::cout << s << std::endl;

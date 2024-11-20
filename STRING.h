@@ -23,6 +23,7 @@ public:
 	//자기 자신(객체의 멤버변수)이 변하진 않음 고로 const 붙임
 	char operator[](size_t) const;
 	char& operator[](size_t);
+	// const 의 유무로도 함수를 구분할 수 있다. 
 
 	//인터페이스 함수
 	size_t size() const;
