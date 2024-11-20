@@ -16,6 +16,7 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <algorithm>
 
 #include "STRING.h"
 #include "save.h"
@@ -23,13 +24,18 @@
 extern bool 관찰;
 
 int main()
-{	
-	STRING s1 = { "나는 문자열" };
-	STRING s2 = std::move(s1);
+{
+	관찰 = true;
+	STRING s[5]{ "1","333","55555","22","4444" };
 
-	std::cout << s1 << std::endl << s2 << std::endl;
+	std::sort(std::begin(s), std::end(s), [](const STRING& a, const STRING& b) {
+		return a.size() < b.size();
+		});
 
-	
+	for (STRING& s : s) {
+		std::cout << s << std::endl;
+	}
+
 	save("소스.cpp");
 }
 
