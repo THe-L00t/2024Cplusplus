@@ -16,33 +16,35 @@
 #include <iostream>
 #include <random>
 #include <string>
-#include <algorithm>
 
-#include "STRING.h"
 #include "save.h"
 
-extern bool 관찰;
+class INT {
+private:
+	int n;
+public:
+	INT() : n{} {
+	};
+	INT(int n) : n{ n } {
+	};
+	~INT(){
+	};
 
+	friend std::ostream& operator<<(std::ostream& os, const INT& n);
+
+};
+std::ostream& operator<<(std::ostream& os, const INT& n) {
+	os << n;
+	return os;
+}
 int main()
 {
-	관찰 = true;
-	STRING s[5]{ "1","333","55555","22","4444" };
-
-	std::sort(std::begin(s), std::end(s), [](const STRING& a, const STRING& b) {
-		return a.size() < b.size();
-		});
-
-	for (STRING& s : s) {
-		std::cout << s << std::endl;
-	}
+	//[문제]클래스 INT를 코딩하여 의도대로 실행되게 하라
+	INT n = { 1 };
+	std::cout << n << std::endl;
+	//std::cout << n++ ++ << std::endl; 빨간줄
+	//std::cout << ++++++++++++++n << std::endl;
 
 	save("소스.cpp");
 }
 
-//xvalue expired 된 값 
-//위의 s1처럼 이동된 빈 값을 가지고 있는 것을 xvalue라고 한다. 
-
-//&	-> ampersand
-//int a; int* p = &a;	-> address of n
-//int& r = n;			-> reference
-//int&& rr = 3;			->rvalue-reference
