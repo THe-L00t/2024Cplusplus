@@ -22,30 +22,14 @@
 
 extern bool 관찰;
 
-
-
-
 int main()
 {	
-	//copy elision - RVO(Return Value Optimization)
-	관찰 = true;
-	STRING s = { "The C++ Programming language!" };
+	std::string s1{ "나는 문자열" };
+	std::string s2 = move(s1);
 
-	//[문제] 다음 코드가 의도대로 실행도게 하라
-	for (int i = 0; i < s.size(); i++)
-	{
-		s[i] = std::toupper(s[i]);
-		// 식이 수정할 수 있는 lvalue여야 합니다. 
-		//lvalue(location value) = right-value 
-		//value category 찾아보기 
-		//표현식 expression은 glvalue와 rvalue로 나뉜다. 
-		// glvalue	--> lvalue		:xvlaue가 아닌 glvalue
-		//			>-> xvalue		:
-		// rvalue	--> prlvalue	:
-	}
+	std::cout << s1 << std::endl << s2 << std::endl;
 
-	std::cout << s << std::endl;
-	//관찰 = false;
+	
 	save("소스.cpp");
 }
 
