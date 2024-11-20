@@ -21,21 +21,20 @@
 
 class INT {
 private:
-	int n;
+	int n{};
 public:
-	INT() : n{} {
-	};
+	/*INT(){
+	}*/
 	INT(int n) : n{ n } {
-	};
-	~INT(){
-	};
-
+	}
+	/*~INT(){
+	}*/
+	//operator int() const { return n; }	이것도 답으로 인정
 	friend std::ostream& operator<<(std::ostream& os, const INT& n);
 
 };
 std::ostream& operator<<(std::ostream& os, const INT& n) {
-	os << n;
-	return os;
+	return os << n.n;
 }
 int main()
 {
