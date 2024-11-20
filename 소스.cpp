@@ -31,11 +31,16 @@ public:
 	}*/
 	//operator int() const { return n; }	이것도 답으로 인정
 	INT& operator++() {
-		n = n + 1;
+		++n;
 		return *this;
 	}
+	INT& operator++(int i) {
+		INT temp{*this};
+		n += 1;
+		return temp;
+	}
 	friend std::ostream& operator<<(std::ostream& os, const INT& n);
-
+	
 
 };
 std::ostream& operator<<(std::ostream& os, const INT& n) {
@@ -47,7 +52,8 @@ int main()
 	INT n = { 1 };
 
 	//operator++()
-	std::cout << ++n << std::endl;
+	std::cout << n++ << std::endl;
+	std::cout << n << std::endl;
 	//std::cout << n++ ++ << std::endl; 빨간줄
 	//std::cout << ++++++++++++++n << std::endl;
 
