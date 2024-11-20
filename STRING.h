@@ -20,9 +20,10 @@ public:
 
 	//연산자 오버로딩 
 	STRING operator+(const char*) const;	//자기 자신과 하는 연산만 하지 않기에 레퍼런스 출력이 아님
-	//자기 자신이 변하진 않음 고로 const 붙임
-	char operator[](size_t);
-	
+	//자기 자신(객체의 멤버변수)이 변하진 않음 고로 const 붙임
+	char operator[](size_t) const;
+	char& operator[](size_t);
+
 	//인터페이스 함수
 	size_t size() const;
 
