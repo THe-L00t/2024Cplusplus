@@ -61,6 +61,10 @@ public:
 		return os;
 	}
 
+	friend std::istream& operator>>(std::istream& is, Dog& dog) {
+		return is >> dog.age >> dog.name;
+	}
+
 
 
 
@@ -79,12 +83,13 @@ int main()
 	std::ifstream in{ "개천마리" };
 	if (not in)  return 1111111;
 	Dog dogs[1000];
-	for (int i = 0; i < 1000; ++i) {
-		int age;
+	for (Dog& dog : dogs /*int i = 0; i < 1000; ++i*/) {
+		/*int age;
 		in >> age;
 		std::string name;
 		in >> name;
-		dogs[i].set(age, name);
+		dogs[i].set(age, name);*/
+		in >> dog;
 	}
 
 	//[문제] qsort로 나이순 오름차순으로 정렬하라 
