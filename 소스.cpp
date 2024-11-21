@@ -42,6 +42,11 @@ public:
 		return age;
 	}
 
+	void set(int a, std::string n) {
+		age = a; 
+		name = n ;
+	}
+
 	//함수호출 연산자를 오버로딩하면 이 class객체는 호출 가능하게 된다. 
 	//함수호출 연산자를 오버로딩한 이 class의 객체를 function object라 한다 . 
 	//left hand side   right hand side
@@ -69,14 +74,30 @@ bool 나이순(const Dog& a, const Dog& b);
 
 int main()
 {
-	//[문제] 파일에 dogs의 정보를 저장하시오
-	Dog dogs[1000]{};
+	//[문제]파일 "개천마리"에는 class Dog 객체 1000개가 저장되어 있다. 
+	//메모리로 다 읽어 와라 
+	std::ifstream in{ "개천마리" };
+	Dog dogs[1000];
+	for (int i = 0; i < 1000; ++i) {
+		int age;
+		in >> age;
+		std::string name;
+		in >> name;
+		dogs[i].set(age, name);
+	}
 
+	//[문제] qsort로 나이순 오름차순으로 정렬하라 
+
+	qsort(dogs, 1000, sizeof(Dog), [](const void* a, const void* b) {
+		Dog& A = *(Dog*)a;
+		Dog& B = *(Dog*)b;
+		return static_cast<int>(A.getAge() - B.getAge());
+		});
+
+	//화면에 정렬된 Dog정보를 출력하라. 
 	std::ofstream out{ "개천마리" };
-
-
 	for (const Dog& dog : dogs) {
-		out << dog;
+		std::cout << dog << std::endl;
 	}
 
 	save("소스.cpp");
