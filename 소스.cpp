@@ -8,8 +8,8 @@
 // 12/12 목요일 15주 1 - 종강
 // 12/18 수요일 15주 2 - 기말
 // -------------------------------------------------------------------------------------
-// move semantics (이동의미론)
-// 
+// 연산자 오버로딩 
+// callable type(호출가능타입) - 함수, 멤버함수, 람다
 // 
 //--------------------------------------------------------------------------------------
 
@@ -19,43 +19,16 @@
 
 #include "save.h"
 
-class INT {
-private:
-	int n{};
-public:
-	/*INT(){
-	}*/
-	INT(int n) : n{ n } {
-	}
-	/*~INT(){
-	}*/
-	//operator int() const { return n; }	이것도 답으로 인정
-	INT& operator++() {
-		++n;
-		return *this;
-	}
-	/*const*/INT operator++(int i) {
-		INT temp{*this};	//현재의 나를 저장한다.
-		++(*this);			//나를 1 증가시킨다. 
-		return std::move(temp);		//저장했던 나를 리턴한다. 
-	}
-	friend std::ostream& operator<<(std::ostream& os, const INT& n);
-	
 
-};
-std::ostream& operator<<(std::ostream& os, const INT& n) {
-	return os << n.n;
-}
 int main()
 {
-	//[문제]클래스 INT를 코딩하여 의도대로 실행되게 하라
-	INT n = { 1 };
+	int a, b;
+	a = b; //빨간줄이 없다 ->  타입이 같다 
 
-	//operator++()
-	std::cout << n++ << std::endl;
-	std::cout << n << std::endl;
-	//std::cout << n++ ++ << std::endl; 빨간줄
-	//std::cout << ++++++++++++++n << std::endl;
+	void (*af)();
+	int (*bf)();
+
+	af = bf;// 둘의 타입이 다르다
 
 	save("소스.cpp");
 }
