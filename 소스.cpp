@@ -77,6 +77,7 @@ int main()
 	//[문제]파일 "개천마리"에는 class Dog 객체 1000개가 저장되어 있다. 
 	//메모리로 다 읽어 와라 
 	std::ifstream in{ "개천마리" };
+	if (not in)  return 1111111;
 	Dog dogs[1000];
 	for (int i = 0; i < 1000; ++i) {
 		int age;
@@ -95,7 +96,6 @@ int main()
 		});
 
 	//화면에 정렬된 Dog정보를 출력하라. 
-	std::ofstream out{ "개천마리" };
 	for (const Dog& dog : dogs) {
 		std::cout << dog << std::endl;
 	}
