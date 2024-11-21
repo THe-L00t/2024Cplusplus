@@ -34,7 +34,7 @@ public:
 		++n;
 		return *this;
 	}
-	INT operator++(int i) {
+	/*const*/INT operator++(int i) {
 		INT temp{*this};	//현재의 나를 저장한다.
 		++(*this);			//나를 1 증가시킨다. 
 		return std::move(temp);		//저장했던 나를 리턴한다. 
