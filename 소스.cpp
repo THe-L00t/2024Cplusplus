@@ -9,7 +9,7 @@
 // 12/18 수요일 15주 2 - 기말
 // -------------------------------------------------------------------------------------
 // 연산자 오버로딩 
-// callable type(호출가능타입) - 함수, 멤버함수, 람다
+// callable type(호출가능타입) - 함수, 멤버함수, 람다, function object
 // 
 //--------------------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ public:
 		return os;
 	}
 
-	int getAge() {
+	int getAge() const{
 		return age;
 	}
 private:
@@ -50,16 +50,23 @@ private:
 	//string에서는 디폴트 생성자를 불러온다.
 };
 
-int 나이순(const void* a, const void* b);
+bool 나이순(const Dog& a, const Dog& b);
 
 int main()
 {
 	Dog dogs[10]{};
 
 	//나이 오름차순으로 정렬하라 
-	
+	//std::sort(std::begin(dogs), std::end(dogs), 나이순);
+	std::sort(std::begin(dogs), std::end(dogs), [](const Dog& a, const Dog& b)->bool {
+		return a.getAge() < b.getAge();
+		});
+	//constexpr 컴파일 시에 계산을 끝낼 수 있다. 
+	// < > 다시 코드를 찍어내는 함수이다?
+	//ranges::sort() 범위 기반의 정렬함수, 가장 최신 함수 
+	//c++ predicate 알아보기 
 
-	qsort(dogs, 10, sizeof(Dog), 나이순);
+	//qsort(dogs, 10, sizeof(Dog), 나이순);
 
 	for (const Dog& dog : dogs)
 	{
@@ -69,8 +76,6 @@ int main()
 	save("소스.cpp");
 }
 
-int 나이순(const void* a, const void* b) {
-	Dog& A = *(Dog*)a;
-	Dog& B = *(Dog*)b;
-	return static_cast<int>(A.getAge() - B.getAge());
+bool 나이순(const Dog& a, const Dog& b) {
+	return a.getAge() < b.getAge();
 }
