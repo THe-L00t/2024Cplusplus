@@ -36,14 +36,25 @@ public:
 		}
 	}
 
+	int getAge() const{
+		return age;
+	}
+
+	//함수호출 연산자를 오버로딩하면 이 class객체는 호출 가능하게 된다. 
+	//함수호출 연산자를 오버로딩한 이 class의 객체를 function object라 한다 . 
+	//left hand side   right hand side
+	bool operator()(const Dog& lhs, const Dog& rhs)const {
+		return lhs.age < rhs.age;
+	}
+
 	friend std::ostream& operator<<(std::ostream& os, const Dog& dog) {
 		std::print(os, "나이 : {:2}, 이름 : {}", dog.age,dog.name);
 		return os;
 	}
 
-	int getAge() const{
-		return age;
-	}
+
+
+
 private:
 	int age{uidAge(dre)};	//{}uniform initializer  연속으로 들어간다면 해당 내용으로 초기화
 	std::string name{};	//비어있다면 일반적으로 0으로 초기화지만
@@ -56,18 +67,10 @@ int main()
 {
 	Dog dogs[10]{};
 
-	//나이 오름차순으로 정렬하라 
-	//std::sort(std::begin(dogs), std::end(dogs), 나이순);
-	std::sort(std::begin(dogs), std::end(dogs), [](const Dog& a, const Dog& b)->bool {
-		return a.getAge() < b.getAge();
-		});
-	//constexpr 컴파일 시에 계산을 끝낼 수 있다. 
-	// < > 다시 코드를 찍어내는 함수이다?
-	//ranges::sort() 범위 기반의 정렬함수, 가장 최신 함수 
-	//c++ predicate 알아보기 
-
-	//qsort(dogs, 10, sizeof(Dog), 나이순);
-
+	//Dog dog;                                  dog 가 들어가도 됨
+	std::sort(std::begin(dogs), std::end(dogs), Dog{});
+	//가능하다. 그러나 빌드 오류 발생 
+	
 	for (const Dog& dog : dogs)
 	{
 		std::cout << dog << std::endl;
