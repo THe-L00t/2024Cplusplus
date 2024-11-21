@@ -18,6 +18,8 @@
 #include <string>
 #include <print>
 #include <algorithm>
+#include <thread>
+#include <fstream>
 
 #include "save.h"
 
@@ -48,7 +50,9 @@ public:
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, const Dog& dog) {
-		std::print(os, "나이 : {:2}, 이름 : {}", dog.age,dog.name);
+		os << dog.age << "  " << dog.name << "  " << std::endl;
+		//장식 출력
+		//std::print(os, "나이 : {:2}, 이름 : {}", dog.age,dog.name);
 		return os;
 	}
 
@@ -65,15 +69,14 @@ bool 나이순(const Dog& a, const Dog& b);
 
 int main()
 {
-	Dog dogs[10]{};
+	//[문제] 파일에 dogs의 정보를 저장하시오
+	Dog dogs[1000]{};
 
-	//Dog dog;                                  dog 가 들어가도 됨
-	std::sort(std::begin(dogs), std::end(dogs), Dog{});
-	//가능하다. 그러나 빌드 오류 발생 
-	
-	for (const Dog& dog : dogs)
-	{
-		std::cout << dog << std::endl;
+	std::ofstream out{ "개천마리" };
+
+
+	for (const Dog& dog : dogs) {
+		out << dog;
 	}
 
 	save("소스.cpp");
