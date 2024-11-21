@@ -16,19 +16,55 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <print>
 
 #include "save.h"
 
+std::default_random_engine dre;
+std::uniform_int_distribution uidAge{ 1,99 };
+std::uniform_int_distribution<int> uidName{ 'a','z' };
+std::uniform_int_distribution uidNameLen{ 3,30 };
+
+class Dog {
+public:
+	Dog(){
+		int len =  uidNameLen(dre);
+		for (int i = 0; i < len; i++)
+		{
+			name += uidName(dre);
+		}
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Dog& dog) {
+		std::print(os, "나이 : {:2}, 이름 : {}", dog.age,dog.name);
+		return os;
+	}
+
+	int getAge() {
+		return age;
+	}
+private:
+	int age{uidAge(dre)};	//{}uniform initializer  연속으로 들어간다면 해당 내용으로 초기화
+	std::string name{};	//비어있다면 일반적으로 0으로 초기화지만
+	//string에서는 디폴트 생성자를 불러온다.
+};
 
 int main()
 {
-	int a, b;
-	a = b; //빨간줄이 없다 ->  타입이 같다 
+	Dog dogs[10]{};
 
-	void (*af)();
-	int (*bf)();
+	//나이 오름차순으로 정렬하라 
 
-	af = bf;// 둘의 타입이 다르다
+	qsort(dogs, 10, sizeof(Dog), [](const void* a, const void* b) {
+		Dog& A = *(Dog*)a;
+		Dog& B = *(Dog*)b;
+		return static_cast<int>(A.getAge() - B.getAge());
+		});
+
+	for (const Dog& dog : dogs)
+	{
+		std::cout << dog << std::endl;
+	}
 
 	save("소스.cpp");
 }
