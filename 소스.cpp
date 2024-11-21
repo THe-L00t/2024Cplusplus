@@ -17,6 +17,7 @@
 #include <random>
 #include <string>
 #include <print>
+#include <algorithm>
 
 #include "save.h"
 
@@ -49,17 +50,16 @@ private:
 	//string에서는 디폴트 생성자를 불러온다.
 };
 
+int 나이순(const void* a, const void* b);
+
 int main()
 {
 	Dog dogs[10]{};
 
 	//나이 오름차순으로 정렬하라 
+	
 
-	qsort(dogs, 10, sizeof(Dog), [](const void* a, const void* b) {
-		Dog& A = *(Dog*)a;
-		Dog& B = *(Dog*)b;
-		return static_cast<int>(A.getAge() - B.getAge());
-		});
+	qsort(dogs, 10, sizeof(Dog), 나이순);
 
 	for (const Dog& dog : dogs)
 	{
@@ -69,3 +69,8 @@ int main()
 	save("소스.cpp");
 }
 
+int 나이순(const void* a, const void* b) {
+	Dog& A = *(Dog*)a;
+	Dog& B = *(Dog*)b;
+	return static_cast<int>(A.getAge() - B.getAge());
+}
