@@ -9,6 +9,7 @@
 // 12/18 수요일 15주 2 - 기말
 // 
 // 11.27 한 시간 강의 못한 내용 - 동영상으로 일요일까지 업로드 
+// 이 반 기말시험은 도형 실습문제를 내기로 말해 버림
 // -------------------------------------------------------------------------------------
 // 클래스 간의 관계 - 상속
 // 
@@ -18,24 +19,32 @@
 
 #include "save.h"
 
-class 핸들 {
+class Animal {
+private:
+	int a{};
+public:
 
 };
 
-class 바퀴 {
+// : is a 의 의미 
+class Dog :public Animal {
+private:
+	double b{};
 
+public:
 };
-
-class 자동차 {
-	핸들 a;
-	바퀴 c[4];
-
-	void f(D d);
-	E g();
-};
-
+//클래스의 관계 검색해보기 
 int main()
 {
-	
+	std::cout <<"Animal size: "<< sizeof Animal << ", Dog size: " << sizeof Dog << std::endl;
+	std::cout << "istream: " << sizeof std::istream << ", ostream: " << sizeof std::ostream << std::endl;
+	std::cout << "iostream: " << sizeof std::iostream << std::endl;
+
+	// 자식 객체가 확보한 메모리에는 부모의 메모리가 포함되어있다. 
+
+
+	// [확인] 생성자와 소멸자의 호출을 관찰한다.  
+
+
 	save("소스.cpp");
 }
