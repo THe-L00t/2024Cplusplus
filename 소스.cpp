@@ -48,12 +48,7 @@ int main()
 {
 	Dog dog;
 	Dog* pDog = { &dog };
-	Animal* pAnimal = { &dog };
-	//이것도 가능하다. 
-
-	//pDog->move();
-	((Animal*)pDog)->move();
-	// 자동으로 이러한 과정이 일어난다. 
+	Animal* pAnimal = pDog; 
 
 	save("소스.cpp");
 }
