@@ -62,11 +62,14 @@ public:
 //		- Multiple behavior 
 class BankString : public std::string {
 public:
+	// BankString(const char* s) : std::string{ s } {}
 	friend std::ostream& operator<<(std::ostream& os, const std::string& str) {
 		for (const char& c : str) {
-			if (c >= '0' && c <= '9') os << '*';
+			if (std::isdigit(c)) os << '*'; // isdigit(c)
 			else os << c;
 		}
+		// 교수님은 일반 for문을 이용하여, string의 인덱스 연산자를 이용하였다.
+		// 상속의 힘을 보여주기 위해
 		return os;
 	}
 };
