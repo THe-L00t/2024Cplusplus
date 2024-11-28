@@ -34,9 +34,9 @@ class Dog : public Animal {
 private:
 	double d;
 public:
-	void move() const {
+	/*void move() const {
 		std::cout << "개 달림" << std::endl;
-	}
+	}*/
 };
 
 class Bird : public Animal {
@@ -47,16 +47,13 @@ public:
 int main()
 {
 	Dog dog;
-	dog.move();	// static binding 
-	// 과정은 어떻게 되나?
-	// 정의 되어있는 move = void move(Animal*);
-	// 우리가 부른 move = void move(Dog*);
-	// 컴파일러는 우리가 부른 함수를 찾지만, 없다. 그러나 dog의 경우 Animal을 상속받아 
-	// Animal의 메모리도 있기에 dog를 Animal객체로 생각하여 정의되어 있는 move를 
-	// 호출 하게 된다. 
+	Dog* pDog = { &dog };
+	Animal* pAnimal = { &dog };
+	//이것도 가능하다. 
 
-	// 컴파일러에서는 멤버함수를 부르지 않는다. 위처럼 멤버함수는 매개변수가 구분되기에 
-	// move라는 함수를 찾아서 부르게 된다. 
+	//pDog->move();
+	((Animal*)pDog)->move();
+	// 자동으로 이러한 과정이 일어난다. 
 
 	save("소스.cpp");
 }
