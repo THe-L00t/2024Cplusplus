@@ -61,16 +61,13 @@ public:
 //		- Multiple behavior 
 int main()
 {
-	/*std::cout <<"Animal size: "<< sizeof Animal << ", Dog size: " << sizeof Dog << std::endl;
-	std::cout << "istream: " << sizeof std::istream << ", ostream: " << sizeof std::ostream << std::endl;
-	std::cout << "iostream: " << sizeof std::iostream << std::endl;*/
-
-	// 자식 객체가 확보한 메모리에는 부모의 메모리가 포함되어있다. 
-
-
-	// [확인] 생성자와 소멸자의 호출을 관찰한다.  
-	Animal a;
-	Dog b;
+	// [문제] 은행에서 사용할 string이다. 
+	// 저장한 string의 내용을 화면에 출력할때 숫자를 '*'로 바꾸어 출력한다.  
 
 	save("소스.cpp");
 }
+
+// c++ main keyword
+// 1. const, & (읽기만 할 수 있다. , 원격제어하겠다. / 복사하지 않겠다.)
+// 2. virtual -> polymorphism
+// 3. template -> generic programming
