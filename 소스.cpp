@@ -17,6 +17,7 @@
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
+#include <string>
 
 #include "save.h"
 
@@ -59,11 +60,24 @@ public:
 // 2. polymorphism : 다(poly) 형(morph) 성(ism)
 //		- One : command, interface
 //		- Multiple behavior 
+class BankString : public std::string {
+public:
+	friend std::ostream& operator<<(std::ostream& os, const std::string& str) {
+		for (const char& c : str) {
+			if (c >= '0' && c <= '9') os << '*';
+			else os << c;
+		}
+		return os;
+	}
+};
 int main()
 {
 	// [문제] 은행에서 사용할 string이다. 
 	// 저장한 string의 내용을 화면에 출력할때 숫자를 '*'로 바꾸어 출력한다.  
+	// 다음 프로그램이 문제없이 실행되게 하자.
+	BankString s{ "2024년 11월 28일" };
 
+	std::cout << s << std::endl;
 	save("소스.cpp");
 }
 
