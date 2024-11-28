@@ -23,68 +23,34 @@
 
 class Animal {
 private:
-	int a{};
+	int n;
 public:
-	Animal() {
-		std::cout << "Animal C" << std::endl;
-	}
-	~Animal() {
-		std::cout << "Animal D" << std::endl;
+	void move() const {
+		std::cout << this << " 움직임 감지" << std::endl;
 	}
 };
 
-//access modifier 
-// - private
-// - protected
-// - public
-// : is a 의 의미 
-class Dog :public Animal {
+class Dog : public Animal {
 private:
-	double b{};
-
+	double d;
 public:
-	Dog() {
-		std::cout << "Dog C" << std::endl;
-	}
-	~Dog() {
-		std::cout << "Dog D" << std::endl;
+	void move() const {
+		std::cout << "개 달림" << std::endl;
 	}
 };
-//클래스의 관계 검색해보기 
 
-//클래스를 엮어서 무엇을 해결하려 하나?
-// 디자인 패턴 design patterns : 우회로를 통해 해결    ?
-
-// 상속의 이용 이유
-// 1. code 재사용
-// 2. polymorphism : 다(poly) 형(morph) 성(ism)
-//		- One : command, interface
-//		- Multiple behavior 
-class BankString : public std::string {
+class Bird : public Animal {
 public:
-	// BankString(const char* s) : std::string{ s } {}
-	friend std::ostream& operator<<(std::ostream& os, const std::string& str) {
-		for (const char& c : str) {
-			if (std::isdigit(c)) os << '*'; // isdigit(c)
-			else os << c;
-		}
-		// 교수님은 일반 for문을 이용하여, string의 인덱스 연산자를 이용하였다.
-		// 상속의 힘을 보여주기 위해
-		return os;
-	}
+	//void move() : Animal::move() {}
 };
+
 int main()
 {
-	// [문제] 은행에서 사용할 string이다. 
-	// 저장한 string의 내용을 화면에 출력할때 숫자를 '*'로 바꾸어 출력한다.  
-	// 다음 프로그램이 문제없이 실행되게 하자.
-	BankString s{ "2024년 11월 28일" };
+	Dog dog;
+	dog.move();
+	// 과정은 어떻게 되나?
+	// 정의 되어있는 move = void move(Animal*);
+	// 우리가 부른 move = void move(Dog*);
 
-	std::cout << s << std::endl;
 	save("소스.cpp");
 }
-
-// c++ main keyword
-// 1. const, & (읽기만 할 수 있다. , 원격제어하겠다. / 복사하지 않겠다.)
-// 2. virtual -> polymorphism
-// 3. template -> generic programming
