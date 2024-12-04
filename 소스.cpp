@@ -17,14 +17,18 @@
 
 #include <iostream>
 #include <string>
+#include <random>
 
 #include "save.h"
 
+
+
 class Animal {
 public:
-	virtual void move() const {	//virtual을 사용하면 virtual pointer가 추가 할당 된다. 
-		std::cout << "동물의 move" << std::endl;
-	}
+	//Animal은 모든 동물의 공통 속성을 표현하기 위한 추상 Abstrct
+	//추상 클래스는 instance하지 않는 것이 자연스럽다.
+	// 이때 조상의 move 함수를 순수가상함수 pure virtual function 으로 만든다
+	virtual void move() const = 0;
 	//포인터이므로 8바이트 
 private:
 	int a;
@@ -49,37 +53,41 @@ private:
 	int b;
 }; //상속 받을때에는 부모 클래스의 메모리는 건드리지 않는다. 
 
+
+std::default_random_engine dre;
+std::uniform_int_distribution uid(0,1);
+
 int main()
 {
-	Animal animal;
-	Dog dog;
-	Bird bird;
+	// [문제] 동물 호텔을 운영한다. 
+	// 몇 마리가 숙박하길 원하는 지 입력받자. ( Dog와 Bird를 합한 수) 
+	// 홀수면 Dog, 짝수면 Bird를 배정한다. 
+	while (true) {
+		std::cout << "몇 마리인가요? ";
+		size_t num;
+		std::cin >> num;
 
-	//polymorphism 을 구현하려면 객체를 부모의 *로 가리켜야 한다. 
-	Animal* animals[3];
-	animals[0] = &animal;
-	animals[1] = &dog;
-	animals[2] = &bird;
+		Animal** animals = new Animal * [num];
+		for (int i = 0; i < num; i++)
+		{
+			int sel = uid(dre);
+			if (1 == sel)
+				animals[i] = new Dog;
+			else
+				animals[i] = new Bird;
+		}
 
-	//모든 동물들에게 move()를 호출한다. 
-	for (int i = 0; i < 3; i++)
-	{
-		animals[i]->move();		//이 함수는 dynamic binding
+		//전체 동물들에게 move명령을 내린다. 
+		for (int i = 0; i < num; i++)
+		{
+			animals[i]->move();
+		}
+
+		for (int i = 0; i < num; i++)
+		{
+			delete animals[i];
+		}
+		delete[] animals;
 	}
-
-	//다형성은 메모리를 막대하게 희생하여 유연함을 얻는다. 
-
-	//같은 이름의 함수라면 c++에서는 name mangling하기 때문에 구분 가능하다. 
-	// 추가 기호를 붙여 구분한다. 
-
-	//컴파일 시간에 어떤 함수를 찾아가야할지 정해진다 -> static binding
-
-	//dynamic binding 
-
-	//memory size check
-	std::cout << "Aniaml : " << sizeof Animal << std::endl;
-	std::cout << "Dog : " << sizeof Dog << std::endl;
-	std::cout << "Bird : " << sizeof Bird << std::endl;
-
 	save("소스.cpp");
 }
