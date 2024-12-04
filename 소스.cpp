@@ -37,7 +37,7 @@ private:
 };
 
 class Dog : public Animal{
-public:
+public: 
 	virtual void move() const override final{
 		std::cout << "개 달린다" << std::endl;
 	}
