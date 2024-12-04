@@ -6,13 +6,12 @@
 // 10.31(목) - 9주 1일차 - 중간 시험
 //--------------------------------------------------------------------------------------
 // 12/12 목요일 15주 1 - 종강
-// 12/18 수요일 15주 2 - 기말
+// 12/18 수요일 15주 2 - 기말 E동 219호
 // 
 // 11.27 한 시간 강의 못한 내용 - 동영상으로 일요일까지 업로드 
 // 이 반 기말시험은 도형 실습문제를 내기로 말해 버림
 // -------------------------------------------------------------------------------------
 // 클래스 간의 관계 - 상속( inheritance )
-// - 1. 코드 재사용
 // - 2. 다형성 구현( dynamic binding )
 //--------------------------------------------------------------------------------------
 
@@ -22,33 +21,53 @@
 #include "save.h"
 
 class Animal {
+public:
+	virtual void move() const {
+		std::cout << "동물의 move" << std::endl;
+	}
 private:
-	int n;
+	int a;
+};
+
+class Dog : public Animal{
 public:
 	void move() const {
-		std::cout << this << " 움직임 감지" << std::endl;
+		std::cout << "개 달린다" << std::endl;
 	}
-};
-
-class Dog : public Animal {
 private:
 	double d;
-public:
-	/*void move() const {
-		std::cout << "개 달림" << std::endl;
-	}*/
 };
 
-class Bird : public Animal {
+class Bird : public Animal{
 public:
-	//void move() : Animal::move() {}
+	void move() const {
+		std::cout << "새 난다" << std::endl;
+	}
+private:
+	//char c; 8bite = 4bite,1bite,3bite(data padding)
+	int b;
 };
 
 int main()
 {
+	Animal animal;
 	Dog dog;
-	Dog* pDog = { &dog };
-	Animal* pAnimal = pDog; 
+	Bird bird;
+
+	animal.move();
+	dog.move();
+	bird.move();
+	//같은 이름의 함수라면 c++에서는 name mangling하기 때문에 구분 가능하다. 
+	// 추가 기호를 붙여 구분한다. 
+
+	//컴파일 시간에 어떤 함수를 찾아가야할지 정해진다 -> static binding
+
+	//dynamic binding 
+
+	//memory size check
+	std::cout << "Aniaml : " << sizeof Animal << std::endl;
+	std::cout << "Dog : " << sizeof Dog << std::endl;
+	std::cout << "Bird : " << sizeof Bird << std::endl;
 
 	save("소스.cpp");
 }
