@@ -29,6 +29,8 @@ public:
 	//추상 클래스는 instance하지 않는 것이 자연스럽다.
 	// 이때 조상의 move 함수를 순수가상함수 pure virtual function 으로 만든다
 	virtual void move() const = 0;
+	// 상속받으려면 move를 정의해야하기에 강제한다. 
+
 	//포인터이므로 8바이트 
 private:
 	int a;
@@ -36,7 +38,7 @@ private:
 
 class Dog : public Animal{
 public:
-	void move() const {
+	virtual void move() const override final{
 		std::cout << "개 달린다" << std::endl;
 	}
 private:
@@ -45,7 +47,7 @@ private:
 
 class Bird : public Animal{
 public:
-	void move() const {
+	virtual void move() const override{
 		std::cout << "새 난다" << std::endl;
 	}
 private:
