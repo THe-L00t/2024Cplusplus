@@ -20,12 +20,20 @@
 
 #include "save.h"
 
-//template<>
-class SafeIntArray {
+template<class X>
+class SafeArray {
 public:
-	SafeIntArray(int n) : num{ n } {
-		np = new int[num];
+	SafeArray(X n) : num{ n } {
+		np = new X[num];
 	}
+	~SafeArray() {
+		delete[] np;
+	}
+	//복사 생성자 / 복사 할당 연산자 
+	//클래스에 동적할당이 이용되었다면 rule of three
+	//소멸자 복사 생성자 복사 할당 연산자 세 가지는 무조건 코딩하기
+
+	//modern c++ 에서는 이동 생성자, 이동 할당 연산자까지 rule of five
 	int operator[](int idx) {
 		if ( idx < 0 || idx >= num) throw idx;
 		return np[idx];
@@ -35,7 +43,7 @@ public:
 		return num;
 	}
 private:
-	int num;
+	X num;
 	int* np;
 };
 
@@ -43,7 +51,8 @@ int main()
 {
 	// [문제] 의도대로 실행되게 하라 
 
-	SafeIntArray a{ 10 };		//int 10개를 저장할 배열을 생성한다. 
+	SafeArray<int> a{ 10 };		//int 10개를 저장할 배열을 생성한다. 
+	//클래스 템플릿은 형식을 꼭 지정해주어야 한다. <int>
 
 	for (int i = 0; i < a.size(); ++i)
 	{
