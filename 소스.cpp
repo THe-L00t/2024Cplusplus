@@ -19,6 +19,17 @@
 
 #include "save.h"
 
+class Dog {
+public:
+	Dog(int n) : num{ n } {}
+
+	friend std::ostream& operator<<(std::ostream& os, const Dog& d) {
+		return os << d.num;
+	}
+private:
+	int num;
+};
+
 template <typename T>
 auto change(T& a, T& b) {
 	T temp = a;
@@ -26,14 +37,17 @@ auto change(T& a, T& b) {
 	b = temp;
 }
 
-int main()
-{
+int main() {
+
 	//[문제] 의도대로 실행되게 하자
 	// 화면 출력이 2, 1
 	int a{ 1 }, b{ 2 };
 	change(a, b);
 	std::cout << a << ", " << b << std::endl;
 
+	Dog dog1{ 1 }, dog2{ 2 };
+	change(dog1, dog2);
+	std::cout << dog1 << ", " << dog2 << std::endl;
 
 	save("소스.cpp");
 }
