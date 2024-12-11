@@ -26,14 +26,14 @@ public:
 	SafeIntArray(int n) : num{ n } {
 		np = new int[num];
 	}
+	int operator[](int idx) {
+		if ( idx < 0 || idx >= num) throw idx;
+		return np[idx];
+	}
 	int size() const
 	{
 		return num;
 	}
-	int operator[](int idx) {
-		if (idx >= num) throw idx;
-		return np[idx];
-		}
 private:
 	int num;
 	int* np;
@@ -49,6 +49,11 @@ int main()
 	{
 		std::cout << a[i] << std::endl;
 	}
-	std::cout << "11번째 원소" << a[10] << std::endl; //예외를 던져라 
+	try {
+		std::cout <<  a[10] << std::endl; //예외를 던져라 
+	}
+	catch (...) {
+		std::cout << "경계를 벗어남 - 0부터 " << 9 << "까지" << std::endl;
+	}
 	save("소스.cpp");
 }
