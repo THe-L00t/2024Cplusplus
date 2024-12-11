@@ -23,8 +23,20 @@
 //template<>
 class SafeIntArray {
 public:
+	SafeIntArray(int n) : num{ n } {
+		np = new int[num];
+	}
+	int size() const
+	{
+		return num;
+	}
+	int operator[](int idx) {
+		if (idx >= num) throw idx;
+		return np[idx];
+		}
 private:
 	int num;
+	int* np;
 };
 
 int main() 
@@ -37,6 +49,6 @@ int main()
 	{
 		std::cout << a[i] << std::endl;
 	}
-	std::cout << a[10] << std::endl; //예외를 던져라 
+	std::cout << "11번째 원소" << a[10] << std::endl; //예외를 던져라 
 	save("소스.cpp");
 }
