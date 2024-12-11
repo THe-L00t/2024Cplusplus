@@ -22,22 +22,29 @@
 class Dog {
 public:
 	Dog(int n) : num{ n } {}
-
+	//디폴트 생성자를 정의하면 삽질이다. 없어도 된다.
 	friend std::ostream& operator<<(std::ostream& os, const Dog& d) {
 		return os << d.num;
+	} //프렌드 함수는 public, private 어디든 상관없다. 
+
+	//*
+	operator int() { //형변환 연산자 
+		return num;
 	}
 private:
 	int num;
 };
 
 template <typename T>
-auto change(T& a, T& b) {
+auto change(T& a, T& b) //함수는 괄호 밑에서, 클래스는 옆에서 
+{
 	T temp = a;
 	a = b;
 	b = temp;
 }
 
-int main() {
+int main() 
+{
 
 	//[문제] 의도대로 실행되게 하자
 	// 화면 출력이 2, 1
