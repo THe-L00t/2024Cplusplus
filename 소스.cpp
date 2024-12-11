@@ -50,7 +50,9 @@ int main()
 {
 
 	int a{ 1 }, b{ 2 };
-	change(a, b);
+	change(a, b);			//change(int, int); 검토
+							//change(int&, int&); 검토
+							//change<int>(int, int); 검토
 	std::cout << a << ", " << b << std::endl;
 
 	Dog dog1{ 1 }, dog2{ 2 };
@@ -59,3 +61,24 @@ int main()
 
 	save("소스.cpp");
 }
+//1단계 소스코드를 펼쳐둔다
+//2단계 문제가 없는지 검토한다. 
+/*
+template<>
+change<int>(int& a, int& b){
+}
+이런 식으로 자료형 마다 다 펼쳐진다. 
+
+템플릿을 사용하면 최적화할 기회가 매우 많이 주어진다. 
+
+ex) 특수화
+sort<Dog>( 첫째 개, 1억번째 개, []() {});
+이렇게 하면 
+template<>
+sort<Dog>(){
+람다 내용을 담을 수 있다. 
+}
+이렇게 찍어내준다. 누가? 컴파일러가 
+람다 함수 내용을 내부에 넣으면 함수 호출이 사라진다. 
+결국 최적화 된다 
+*/
