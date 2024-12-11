@@ -17,30 +17,28 @@
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
-#include <array>
+#include <memory>
 
 #include "save.h"
 
-class SmartIntPtr {
+class Dog {
 public:
-	SmartIntPtr(int* p) : p{ p } {
-		std::cout << "생성시 자원을 획득" << std::endl;
+	Dog() {
+		std::cout << "Dog 생성" << std::endl;
 	}
-	~SmartIntPtr() { 
-		std::cout << "소멸시 내가 획득한 자원을 소멸" << std::endl;
-		delete p; //내 가 소멸하는 것이 아님.
+	~Dog() {
+		std::cout << "Dog 소멸" << std::endl;
 	}
-private:
-	int* p;
 };
-
 
 int main() 
 {
-	{
-		SmartIntPtr p{ new int };		//RAII를 구현한 스마트 포인터
-		//자원의 생사에 집중
-	}
+	//std::shared_ptr
+	std::unique_ptr<Dog[]> p{new Dog[4]};		//RAII를 구현한 스마트 포인터
+	//자원의 생사에 집중
+	
+	//메모리 손해가 없다. 
+	std::cout << "raw pointer에 비해 메모리를 더 사용하지 않는다 - " << sizeof p << std::endl;
+
 	save("소스.cpp");
-	std::cout << "main 빠져나가기 전" << std::endl;
 }
