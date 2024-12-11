@@ -16,69 +16,27 @@
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
+#include <algorithm>
 
 #include "save.h"
 
-class Dog {
+//template<>
+class SafeIntArray {
 public:
-	Dog(int n) : num{ n } {}
-	//디폴트 생성자를 정의하면 삽질이다. 없어도 된다.
-	friend std::ostream& operator<<(std::ostream& os, const Dog& d) {
-		return os << d.num;
-	} //프렌드 함수는 public, private 어디든 상관없다. 
-
-	//*
-	operator int() { //형변환 연산자 
-		return num;
-	}
 private:
 	int num;
 };
 
-template <class X>
-void change(X&, X&);
-
-template <class X>
-void change(X& a, X& b) //함수는 괄호 밑에서, 클래스는 옆에서 
-{
-	X temp = a;
-	a = b;
-	b = temp;
-}
-
 int main() 
 {
+	// [문제] 의도대로 실행되게 하라 
 
-	int a{ 1 }, b{ 2 };
-	change(a, b);			//change(int, int); 검토
-							//change(int&, int&); 검토
-							//change<int>(int, int); 검토
-	std::cout << a << ", " << b << std::endl;
+	SafeIntArray a{ 10 };		//int 10개를 저장할 배열을 생성한다. 
 
-	Dog dog1{ 1 }, dog2{ 2 };
-	change(dog1, dog2);
-	std::cout << dog1 << ", " << dog2 << std::endl;
-
+	for (int i = 0; i < a.size(); ++i)
+	{
+		std::cout << a[i] << std::endl;
+	}
+	std::cout << a[10] << std::endl; //예외를 던져라 
 	save("소스.cpp");
 }
-//1단계 소스코드를 펼쳐둔다
-//2단계 문제가 없는지 검토한다. 
-/*
-template<>
-change<int>(int& a, int& b){
-}
-이런 식으로 자료형 마다 다 펼쳐진다. 
-
-템플릿을 사용하면 최적화할 기회가 매우 많이 주어진다. 
-
-ex) 특수화
-sort<Dog>( 첫째 개, 1억번째 개, []() {});
-이렇게 하면 
-template<>
-sort<Dog>(){
-람다 내용을 담을 수 있다. 
-}
-이렇게 찍어내준다. 누가? 컴파일러가 
-람다 함수 내용을 내부에 넣으면 함수 호출이 사라진다. 
-결국 최적화 된다 
-*/
