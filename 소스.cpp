@@ -21,17 +21,26 @@
 
 #include "save.h"
 
-//전역으로 선언시 메모리 사용량 매우 커짐
-//std::array<int, 10> a;
+class SmartIntPtr {
+public:
+	SmartIntPtr(int* p) : p{ p } {
+		std::cout << "생성시 자원을 획득" << std::endl;
+	}
+	~SmartIntPtr() { 
+		std::cout << "소멸시 내가 획득한 자원을 소멸" << std::endl;
+		delete p; //내 가 소멸하는 것이 아님.
+	}
+private:
+	int* p;
+};
+
 
 int main() 
 {
-	
-	std::array<int, 10> a;	
-	a.fill(333);
-	for (int n : a)
-		std::cout << n << ' ';
-
-	std::cout << "옛날 배열과 비교하여 메모리를 더 쓰지 않는다 - " << sizeof(a) << std::endl;
+	{
+		SmartIntPtr p{ new int };		//RAII를 구현한 스마트 포인터
+		//자원의 생사에 집중
+	}
 	save("소스.cpp");
+	std::cout << "main 빠져나가기 전" << std::endl;
 }
