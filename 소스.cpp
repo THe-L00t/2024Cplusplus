@@ -35,10 +35,10 @@ private:
 	int num;
 };
 
-template <typename T>
-auto change(T& a, T& b) //함수는 괄호 밑에서, 클래스는 옆에서 
+template <class X>
+auto change(X& a, X& b) //함수는 괄호 밑에서, 클래스는 옆에서 
 {
-	T temp = a;
+	X temp = a;
 	a = b;
 	b = temp;
 }
@@ -46,8 +46,6 @@ auto change(T& a, T& b) //함수는 괄호 밑에서, 클래스는 옆에서
 int main() 
 {
 
-	//[문제] 의도대로 실행되게 하자
-	// 화면 출력이 2, 1
 	int a{ 1 }, b{ 2 };
 	change(a, b);
 	std::cout << a << ", " << b << std::endl;
