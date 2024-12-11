@@ -13,6 +13,7 @@
 // -------------------------------------------------------------------------------------
 // Template - generic programming의 핵심 키워드 
 // 함수 템플릿 / 클래스 템플릿 2개를 만들어 보면서 필요성 이해
+// -> T [N] 사용할 이유가 없다. --- array<T,N> 사용해야 한다. 
 //--------------------------------------------------------------------------------------
 
 #include <iostream>
@@ -20,46 +21,17 @@
 
 #include "save.h"
 
-template<class X, int N>
-class SafeArray {
-public:
-	//생성시 아무것도 하지 않으면 rule of zero
-	//복사 생성자 / 복사 할당 연산자 
-	//클래스에 동적할당이 이용되었다면 rule of three
-	//소멸자 복사 생성자 복사 할당 연산자 세 가지는 무조건 코딩하기
-
-	//modern c++ 에서는 이동 생성자, 이동 할당 연산자까지 rule of five
-	int operator[](int idx) {
-		if ( idx < 0 || idx >= N) throw idx;
-		return dat[idx];
-	}
-	/*constexpr*/ int size() const //3학년 내용
-	{
-		return N;
-	}
-private:
-	X dat[N];
-};
+//전역으로 선언시 메모리 사용량 매우 커짐
+//std::array<int, 10> a;
 
 int main() 
 {
-	// [문제] 의도대로 실행되게 하라 
+	
+	std::array<int, 10> a;	
+	a.fill(333);
+	for (int n : a)
+		std::cout << n << ' ';
 
-	//int a[10] 과 같은 메모리 사용
-	//그러나 예외 처리도 가능
-	std::array<int, 10> a;		//int 10개를 저장할 배열을 생성한다. 
-	//클래스 템플릿은 형식을 꼭 지정해주어야 한다. <int>
-	//배열만 <int, 10> 가능
-
-	for (int i = 0; i < a.size(); ++i)
-	{
-		std::cout << a[i] << std::endl;
-	}
-	try {
-		std::cout <<  a[10] << std::endl; //예외를 던져라 
-	}
-	catch (...) {
-		std::cout << "경계를 벗어남 - 0부터 " << 9 << "까지" << std::endl;
-	}
+	std::cout << "옛날 배열과 비교하여 메모리를 더 쓰지 않는다 - " << sizeof(a) << std::endl;
 	save("소스.cpp");
 }
